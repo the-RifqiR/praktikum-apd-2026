@@ -49,9 +49,6 @@ print("Makanan 5   =", makanan_5)
 print("Makanan 6   =", makanan_6)
 print("List Harga Makanan=", harga_makanan)
 
-# -6 = index 0, -1 = index 5
-print("List Harga Makanan Dari Index Negatif:", harga_makanan[-6:])
-
 print("=================================================")
 print("                 Hasil Perhitungan               ")
 print("=================================================")
