@@ -37,7 +37,7 @@ paketLangganan = [
     },
 ]
 
-if statusLogin:
+if statusLogin == True:
     print("\n" + "=" * 45)
     print(f" LOGIN BERHASIL! Selamat datang, {inputNama}.")
     print("=" * 45)
@@ -72,7 +72,7 @@ if statusLogin:
         
     # Perhitungannya
     jumlahBiayaAdmin = int(biayaLangganan * biayaAdmin)
-    totalBayar = int(biayaLangganan + jumlahBiayaAdmin)        
+    totalBayar = biayaLangganan + jumlahBiayaAdmin        
     
     # Output Akhir Rapikan yehehehehehehe
     print("\n" + "=" * 45)
