@@ -72,7 +72,7 @@ if statusLogin:
         
     # Perhitungannya
     biayaAdmin = int(biayaLangganan * biayaAdmin)
-    total_bayar = int(biayaLangganan + biayaAdmin)        
+    totalBayar = int(biayaLangganan + biayaAdmin)        
     
     # Output Akhir Rapikan yehehehehehehe
     print("\n" + "=" * 45)
@@ -83,7 +83,7 @@ if statusLogin:
     print(f" Biaya Langganan  : Rp {int(biayaLangganan)}")
     print(f" Biaya Admin : Rp {int(biayaAdmin)}")
     print("-" * 45)
-    print(f" TOTAL BAYAR      : Rp {int(biayaAdmin)}")
+    print(f" TOTAL BAYAR      : Rp {int(totalBayar)}")
     print("-" * 45)
     print(f" Fitur & Benefit  :\n -> {benefit}")
     print("=" * 45)
