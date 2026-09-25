@@ -80,10 +80,10 @@ if statusLogin:
     print("=" * 45)
     print(f" Nama Pengguna    : {inputNama}")
     print(f" Paket Dipilih    : {namaPaket}")
-    print(f" Biaya Langganan  : Rp {biayaLangganan:,.0f}".replace(",", "."))
+    print(f" Biaya Langganan  : Rp {int(biayaLangganan)}")
     print(f" Biaya Admin : Rp {int(biayaAdmin)}")
     print("-" * 45)
-    print(f" TOTAL BAYAR      : Rp {total_bayar:,.0f}".replace(",", "."))
+    print(f" TOTAL BAYAR      : Rp {int(biayaAdmin)}")
     print("-" * 45)
     print(f" Fitur & Benefit  :\n -> {benefit}")
     print("=" * 45)
@@ -91,8 +91,6 @@ if statusLogin:
     print("=" * 45)
 
 else:
-    print("\n" + "=" * 45)
-    print(" [X] LOGIN GAGAL! Nama atau NIM tidak sesuai.")
+    print(" LOGIN GAGAL! Nama atau NIM tidak sesuai.")
     print(" Program dihentikan.")
-    print("=" * 45)
     exit()
