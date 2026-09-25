@@ -70,11 +70,11 @@ if statusLogin:
         print("\n Pilihan tidak valid. Program dihentikan.")
         exit()
         
-    # Perhitungan Nominal
+    # Perhitungannya
     biayaAdmin = int(biayaLangganan * biayaAdmin)
     total_bayar = int(biayaLangganan + biayaAdmin)        
     
-    # Tampilan Struk / Output Akhir Rapi
+    # Output Akhir Rapikan yehehehehehehe
     print("\n" + "=" * 45)
     print("         RINCIAN PEMBAYARAN ANGKASA         ")
     print("=" * 45)
