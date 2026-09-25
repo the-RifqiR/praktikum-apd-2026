@@ -1,6 +1,6 @@
 biayaLangganan = 1500000
-nama = "haha"
-nim = 11
+nama = "Rifqi"
+nim = 40
 
 # Input Login
 print("=" * 45)
@@ -71,8 +71,8 @@ if statusLogin:
         exit()
         
     # Perhitungannya
-    biayaAdmin = int(biayaLangganan * biayaAdmin)
-    totalBayar = int(biayaLangganan + biayaAdmin)        
+    jumlahBiayaAdmin = int(biayaLangganan * biayaAdmin)
+    totalBayar = int(biayaLangganan + jumlahBiayaAdmin)        
     
     # Output Akhir Rapikan yehehehehehehe
     print("\n" + "=" * 45)
@@ -81,7 +81,7 @@ if statusLogin:
     print(f" Nama Pengguna    : {inputNama}")
     print(f" Paket Dipilih    : {namaPaket}")
     print(f" Biaya Langganan  : Rp {int(biayaLangganan)}")
-    print(f" Biaya Admin : Rp {int(biayaAdmin)}")
+    print(f" Biaya Admin : Rp {int(jumlahBiayaAdmin)}")
     print("-" * 45)
     print(f" TOTAL BAYAR      : Rp {int(totalBayar)}")
     print("-" * 45)
@@ -91,6 +91,5 @@ if statusLogin:
     print("=" * 45)
 
 else:
-    print(" LOGIN GAGAL! Nama atau NIM tidak sesuai.")
-    print(" Program dihentikan.")
+    print(" LOGIN GAGAL! Nama atau NIM tidak sesuai. Program dihentikan")
     exit()
