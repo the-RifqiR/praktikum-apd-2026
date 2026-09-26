@@ -3,6 +3,7 @@ nama = "Rifqi"
 nim = 40
 
 # Input Login
+# 1. VALIDASI LOGIN
 print("=" * 45)
 print("   LAYANAN STREAMING MUSIK 'ANGKASA'   ")
 print("=" * 45)
@@ -37,6 +38,7 @@ paketLangganan = [
     },
 ]
 
+# 2. OPSI PEMBAYARAN BIAYA LANGGANAN
 if statusLogin == True:
     print("\n" + "=" * 45)
     print(f" LOGIN BERHASIL! Selamat datang, {inputNama}.")
@@ -71,10 +73,11 @@ if statusLogin == True:
         exit()
         
     # Perhitungannya
+    # 4. RUMUS PERHITUNGAN
     jumlahBiayaAdmin = int(biayaLangganan * biayaAdmin)
     totalBayar = biayaLangganan + jumlahBiayaAdmin        
     
-    # Output Akhir Rapikan yehehehehehehe
+    # 3. Output Akhir Rapikan yehehehehehehe  
     print("\n" + "=" * 45)
     print("         RINCIAN PEMBAYARAN ANGKASA         ")
     print("=" * 45)
