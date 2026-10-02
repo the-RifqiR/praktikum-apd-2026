@@ -18,25 +18,81 @@ while True:
         print("Password salah")
         
     
+pulau = ""
+jenisLahan = ""
+while pulau != "KALIMANTAN" and pulau != "SUMATERA":
+    print(f"{headerfooter}\nLIST PULAU\n1. KALIMANTAN\n2. SUMATERA\n{headerfooter}")
+    inputPulau = input("Masukan Pulau (KALIMANTAN/SUMATERA): ").strip().upper()
+    print(f"{headerfooter}\nLIST JENSI LAHAN\n1. GAMBUT\n2. MINERAL\n{headerfooter}")
+        
+    
+    if inputPulau == "KALIMANTAN":
+        pulau = inputPulau
+        print(f"Anda memilih pulau {pulau}\n")
+        
+        jenisLahan = ""
+        while jenisLahan != "GAMBUT" and jenisLahan != "MINERAL": 
+            inputJenisLahan = input("Masukan Jenis Lahan (GAMBUT/MINERAL): ").strip().upper()
+            if inputJenisLahan == "GAMBUT":
+                jenisLahan = inputJenisLahan            
+                print(f"Anda memilih jenis lahan {jenisLahan}\n")
+            elif inputJenisLahan == "MINERAL": 
+                jenisLahan = "MINERAL"            
+                print(f"Anda memilih jenis lahan {jenisLahan}\n")
+            else:
+                print("Input salah atau kosong masukan kembali") 
+    elif inputPulau == "SUMATERA":
+        pulau = inputPulau
+        print(f"Anda memilih pulau {pulau}\n")
+        
+        jenisLahan = ""
+        while jenisLahan != "GAMBUT" and jenisLahan != "MINERAL": 
+            inputJenisLahan = input("Masukan Jenis Lahan (GAMBUT/MINERAL): ").strip().upper()
+            
+            if inputJenisLahan == "GAMBUT":
+                jenisLahan = inputJenisLahan
+                print(f"Anda memilih jenis lahan {jenisLahan}\n")
+            elif inputJenisLahan == "MINERAL": 
+                jenisLahan = inputJenisLahan
+                print(f"Anda memilih jenis lahan {jenisLahan}\n")
+            else:
+                print("Output: Input salah atau kosong masukan kembali") 
 
-while True:
-    print(headerfooter)
-    print("LIST PULAU\n1. KALIMANTAN\n2. SUMATERA")
-    print(headerfooter)
-    
-    inputPulau = input("Masukan Pulau: ")
-    
-    if inputPulau == "1":
-        print("Anda memilih pulau KALIMANTAN\n")
-        print(headerfooter)
-        print("LIST JENSI LAHAN\n1. GAMBUT\n2. MINERAL")
-        print(headerfooter)
-        
-        inputJenisLahan = input("Masukan Jenis Lahan: ")
     else:
-        print("Anda memilih pulau SUMATERA\n")
-        print(headerfooter)
-        print("LIST JENSI LAHAN\n1. GAMBUT\n2. MINERAL")
-        print(headerfooter)
+        print("Output: Inputmu kosong atau tidak sesuai")
         
-        inputJenisLahan = input("Masukan Jenis Lahan: ")
+print(f"{pulau}-{jenisLahan}")
+while True:
+    angka = input("Masukan Jumlah Titik Api: ")
+            
+    if angka == "":
+        print("Input kosong")
+    elif not angka.isdigit():
+        print("Angka harus dikit")
+    else:
+        angka = int(angka)
+        hektareLahan = angka * 5
+        break 
+            
+
+    # while True:
+    #     angka = int(input("Masukan Titik APIIIIII: "))
+        
+    #     titiekAPIIII = angka * 5
+    #     print(f"{pulau}-{jenisLahan} memiliki titik api sebanyak {angka} atau sebanyak {titiekAPIIII} hektare")
+    #     break
+    
+    
+    # while True:
+    #     konfirmasi = str(input("Apakah anda masih mau input data titik api lagi? (Y/T)").upper())
+        
+    #     if konfirmasi == "Y":
+    #         break
+    #     elif konfirmasi == "T":
+    #         break
+    #     else:
+    #         print("Kosong atau salah, Masukan yang benar")
+
+    # if konfirmasi == "T":
+    #     break
+
