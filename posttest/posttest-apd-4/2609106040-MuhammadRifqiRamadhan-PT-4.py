@@ -1,5 +1,5 @@
-username = "Haha"
-password = "041"
+username = "Rifqi"
+password = "040"
 headerfooter = "="* 40
 
 
@@ -16,11 +16,13 @@ while True:
         print("Username salah")
     else:
         print("Password salah")
+   
     
 kalimantanGambut = 0
 kalimantanMineral = 0
 sumateraGambut = 0
 sumateraMineral = 0
+
 # While 1 Start
 while True:   
     pulau = ""
@@ -30,12 +32,12 @@ while True:
         
         print(f"{headerfooter}\nLIST PULAU\n1. KALIMANTAN\n2. SUMATERA\n{headerfooter}")
         inputPulau = input("Masukan Pulau (KALIMANTAN/SUMATERA): ").strip().upper()
-        print(f"{headerfooter}\nLIST JENSI LAHAN\n1. GAMBUT\n2. MINERAL\n{headerfooter}")
 
 
         if inputPulau == "KALIMANTAN":
             pulau = inputPulau
             print(f"Anda memilih pulau {pulau}\n")
+            print(f"{headerfooter}\nLIST JENIS LAHAN\n1. GAMBUT\n2. MINERAL\n{headerfooter}")
 
             jenisLahan = ""
             # while 3 kalimantan start
@@ -54,6 +56,7 @@ while True:
         elif inputPulau == "SUMATERA":
             pulau = inputPulau
             print(f"Anda memilih pulau {pulau}\n")
+            print(f"{headerfooter}\nLIST JENIS LAHAN\n1. GAMBUT\n2. MINERAL\n{headerfooter}")
             # While 3 sumatera start 
             while jenisLahan != "GAMBUT" and jenisLahan != "MINERAL": 
                 inputJenisLahan = input("Masukan Jenis Lahan (GAMBUT/MINERAL): ").strip().upper()
