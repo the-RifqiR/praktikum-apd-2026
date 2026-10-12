@@ -30,3 +30,22 @@ while True:
                 print("Masukan Yang Benar-Benar Aja lah (1/2/3)")
             else:
                 break
+    if menu_awal == 4:
+        print("\nTerima kasih sudah menggunakan VlaoTracker")
+        break
+    
+    elif menu_awal == 3:
+        os.system('cls')
+        print(bintang)
+        print(" REGISTER AKUN BARU ".center(45, "="))
+        print(bintang)
+        
+        while True:
+            new_username = input("Masukan Username baru: ")
+            # Cek duplikasi username
+            sudah_ada = False
+            for acc in accounts:
+                print(acc)
+                if acc[0] == new_username:
+                    sudah_ada = True
+            
