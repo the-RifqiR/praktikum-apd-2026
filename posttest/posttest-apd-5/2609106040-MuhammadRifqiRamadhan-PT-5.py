@@ -20,6 +20,7 @@ while True:
     print(bintang)
     while True:
         menu_awal = input("Pilih menu (1-4): ").strip()
+        
         if menu_awal == "":
             print("DIISI KOCAK NGAPAIN INPUT KOSONG???")
         elif not menu_awal.isdigit():
@@ -27,9 +28,10 @@ while True:
         else:
             menu_awal = int(menu_awal)
             if menu_awal < 1 or menu_awal > 4:
-                print("Masukan Yang Benar-Benar Aja lah (1/2/3)")
+                print("Masukan Yang Benar-Benar Aja lah (1/2/3/4)")
             else:
                 break
+            
     if menu_awal == 4:
         print("\nTerima kasih sudah menggunakan VlaoTracker")
         break
@@ -66,3 +68,26 @@ while True:
         print("Registrasi Berhasil, Silakan Login.")
         input("Tekan ENTER untuk kembali...")
         continue
+    
+    os.system('cls')
+    if menu_awal == 1:
+        print(" LOGIN ADMIN ".center(45, "="))
+        target_role = "admin"
+    else:
+        print(" LOGIN PENGGUNA ".center(45, "="))
+        target_role = "user"    
+        
+    inputUsername = input("Username: ")
+    inputPassword = input("Password: ")
+    
+    login_sukses = False
+    for account in accounts:
+        # kalau username sama dan password sama dan role sama
+        if  inputUsername == account[0] and inputPassword == account[1] and  target_role == account[2]:
+            login_sukses = True
+            break
+        
+    if target_role == "admin":
+        print("hello world")
+        input("enter")
+        
