@@ -48,4 +48,21 @@ while True:
                 print(acc)
                 if acc[0] == new_username:
                     sudah_ada = True
-            
+            if new_username == "":
+                print("Username tidak boleh kosong!")
+            elif sudah_ada:
+                print("Username sudah terdaftar")
+            else:
+                break
+                
+        while True:
+            new_password = input("Masukan Password baru: ")
+            if new_password == "":
+                print("Password tidak boleh kosong!")
+            else:
+                break
+                
+        accounts.append([new_username, new_password, "user"])
+        print("Registrasi Berhasil, Silakan Login.")
+        input("Tekan ENTER untuk kembali...")
+        continue
