@@ -87,7 +87,35 @@ while True:
             login_sukses = True
             break
         
+    if not login_sukses:
+        print("\n\033[91mLogin Gagal, Username atau Password salah.\033[0m")
+        input("Tekan ENTER untuk kembali...")
+        continue
+        
     if target_role == "admin":
-        print("hello world")
-        input("enter")
+        while True:
+            os.system("cls" if os.name == "nt" else "clear") 
+            print(bintang)
+            print(f" SELAMAT DATANG ADMIN ({inputUsername}) ".center(45, "="))
+            print(bintang)
+            print("1. Tambah Map Baru")
+            print("2. Tambah Agent Baru")
+            print("3. Lihat Rekap Pengguna")
+            print("4. Logout (Kembali ke Beranda)")
+            print(bintang)
+            
+            inputPilih = input("Pilih menu (1-4): ").strip()
+            
+            if inputPilih == "":
+                print("Input tidak boleh kosong")
+                input("\nTekan ENTER untuk lanjut...")
+                
+            elif not inputPilih.isdigit():
+                print("Input harus angka")
+                input("\nTekan ENTER untuk lanjut...")
+                
+            elif inputPilih == "1":
+                os.system("cls" if os.name == "nt" else "clear")
+                print("=== TAMBAH MAP ===")
+                map_baru = input("Masukkan nama map baru: ").strip().upper()
         
