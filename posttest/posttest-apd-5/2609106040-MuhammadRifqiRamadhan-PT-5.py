@@ -7,6 +7,15 @@ accounts = [
     ["bang lari", "068", "user"]
 ]
 
+daftar_map = ["Ascent", "Bind", "Haven", "Split", "Lotus", "Sunset", "Abyss", "Corrode", "Icebox", "Summit", "Pearl"]
+daftar_role = ["Duelist", "Initiator", "Controller", "Sentinel"]
+daftar_agents = [
+    ["Jett", "Phoenix", "Raze", "Reyna", "Yoru", "Neon", "Iso", "Waylay"],  # Duelist
+    ["Breach", "Sova", "Skye", "Kayo", "Fade", "Gekko", "Tejo"], # Initiator
+    ["Brimstone", "Omen", "Viper", "Astra", "Harbor", "Clove", "Miks"], # Controller
+    ["Sage", "Cypher", "Killjoy", "Chamber", "Deadlock", "Vyse"]  # Sentinel
+]
+
 bintang = "=" * 45
 while True:
     os.system('cls')
@@ -128,4 +137,25 @@ while True:
                     daftar_map.append(map_baru)
                     print(f"\nMap '{map_baru}' berhasil tambah")
                 input("\nTekan ENTER untuk lanjut...")
-        
+            elif inputPilih == "2":
+                os.system("cls" if os.name == "nt" else "clear")
+                print("=== TAMBAH AGENT ===")
+                print("Pilih Role Agent: ")
+                for i in range(len(daftar_role)):
+                    print(f"{i+1}. {daftar_role[i]}")
+                
+                input_role = input("Pilih nomor role (1-4): ").strip()
+                if input_role.isdigit() and 1 <= int(input_role) <= len(daftar_agents):
+                    idx_r = int(input_role) - 1
+                    agent_baru = input(f"Masukkan nama agent untuk {daftar_role[idx_r]}: ").strip().upper()
+                    if agent_baru == "":
+                        print("Nama agent tidak boleh kosong!")
+                    elif agent_baru in [nama.upper() for nama in daftar_agents[idx_r]]:
+                        print("Agent tersebut sudah terdaftar pada role ini!")
+                    else:
+                        daftar_agents[idx_r].append(agent_baru)
+                        print(f"\nAgent '{agent_baru}' berhasil tambah")
+                else:
+                    print("\nPilihan role gak ada")
+                input("\nTekan ENTER untuk lanjut...")
+                
