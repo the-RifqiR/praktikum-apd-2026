@@ -118,4 +118,14 @@ while True:
                 os.system("cls" if os.name == "nt" else "clear")
                 print("=== TAMBAH MAP ===")
                 map_baru = input("Masukkan nama map baru: ").strip().upper()
+                if map_baru == "":
+                    print("Nama map tidak boleh kosong!")
+                    
+                elif map_baru in [nama.upper() for nama in daftar_map]:
+                    print("Map tersebut sudah terdaftar!")
+                    
+                else:
+                    daftar_map.append(map_baru)
+                    print(f"\nMap '{map_baru}' berhasil tambah")
+                input("\nTekan ENTER untuk lanjut...")
         
