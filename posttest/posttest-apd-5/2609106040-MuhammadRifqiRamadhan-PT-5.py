@@ -7,6 +7,8 @@ accounts = [
     ["bang lari", "068", "user"]
 ]
 
+daftar_rank = ("Iron", "Bronze", "Silver", "Gold", "Platinum","Diamond", "Ascendant", "Immortal", "Radiant")
+
 daftar_map = ["Ascent", "Bind", "Haven", "Split", "Lotus", "Sunset", "Abyss", "Corrode", "Icebox", "Summit", "Pearl"]
 
 daftar_role = ["Duelist", "Initiator", "Controller", "Sentinel"]
@@ -20,6 +22,37 @@ daftar_agents = [
 data_performa = []
 
 bintang = "=" * 45
+
+os.system("cls" if os.name == "nt" else "clear")
+print('''=====================================================
+Halo, halo, Selamat Pagi, Hidup Mahasiswa, Hidup Rakyat Indonesia, Hidup Perempuan Yang Melawan, Hidup Teknik! Selamat datang di program paling epik 
+abad ini: VLAOTRACKER 
+
+Dibuat dengan sepenuh hati, secangkir kopi, dan 
+sedikit kepanikan (bohong aja padahal panik banget, duh gusti) demi menyelesaikan posttest 
+tercinta dari Kakak-kakak Aslab kelas B1 paling 
+keren sejagat raya:
+-> NLG'25 (068)
+-> R'25   (106)
+-> SNA'25 (016)
+Kesamaannya apa adik adik? benar, sama-sama akt 2025 absennya ada 6, wait... 666 wah well well well
+(Ijin tampil)
+
+Program ini didedikasikan buat para pejuang 
+Ranked Valorant yang mau nge-track performa 
+tanpa kesalahan berfikir, dan tentunya sudah disesuaikan (ekspetasinya tolong dijaga) 
+dengan jalur hukum "List & Tuple"  biar aman 
+sentosa waktu diperiksa (keburu diangkat saber).
+NAH INI BARU
+MY KARYA GUWEH
+
+Intinya: Catat performa, hindari salah indeks, 
+semoga lulus posttest, dan jangan lupa senyum ya Aslab Aslab Aslab Aslab sibuk banget kaya penjabat! Yey! 🎉
+time to lock in
+=====================================================''')
+input("Enter Kalau Gak Mau Baca Yappingan")
+print(f"{bintang}")
+
 while True:
     os.system('cls')
     print(bintang)
@@ -59,7 +92,6 @@ while True:
             # Cek duplikasi username
             sudah_ada = False
             for acc in accounts:
-                print(acc)
                 if acc[0] == new_username:
                     sudah_ada = True
             if new_username == "":
@@ -78,6 +110,7 @@ while True:
                 
         accounts.append([new_username, new_password, "user"])
         print("Registrasi Berhasil, Silakan Login.")
+        print(acc)
         input("Tekan ENTER untuk kembali...")
         continue
     
@@ -733,7 +766,9 @@ while True:
                             inputDelete = input("\nMasukkan nomor game yang ingin dihapus (atau 'kembali'): ").strip().lower()
 
                             if inputDelete == "kembali":
-                                break
+                                    print("Hapus data dibatalkan.")
+                                    input("Tekan ENTER untuk kembali...")
+                                    break
                             
                             elif inputDelete.isdigit():
                                 if 1 <= int(inputDelete) <= len(user_matches):
@@ -744,6 +779,9 @@ while True:
 
                             else:
                                 print("Masukkan nomor data game yang valid atau ketik 'kembali'!")
+                        
+                        if inputDelete == "kembali":
+                            continue
                             
                         konfirm = input(f"Yakin ingin menghapus Game #{idx_delete + 1}? (y/t): ").strip().lower()
                         if konfirm == "y" or konfirm == "ya":
@@ -932,3 +970,8 @@ while True:
                     else:
                         print("Pilihan tidak valid!")
                         input("Tekan ENTER...")
+            elif inputUserMenu == "3":
+                break
+            else:
+                print("Pilihan tidak valid!")
+                input("Tekan ENTER...")
