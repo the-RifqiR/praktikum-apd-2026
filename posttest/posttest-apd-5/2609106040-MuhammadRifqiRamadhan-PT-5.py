@@ -24,6 +24,7 @@ data_performa = []
 bintang = "=" * 45
 
 os.system("cls" if os.name == "nt" else "clear")
+# Nama Programnya VlaoTracker, Apa? Typo? Engga memang gitu namanya. Coba aja ketik Valo cepat cepat lewat keyboard layout hp
 print('''=====================================================
 Halo, halo, Selamat Pagi, Hidup Mahasiswa, Hidup Rakyat Indonesia, Hidup Perempuan Yang Melawan, Hidup Teknik! Selamat datang di program paling epik 
 abad ini: VLAOTRACKER 
@@ -54,7 +55,7 @@ input("Enter Kalau Gak Mau Baca Yappingan")
 print(f"{bintang}")
 
 while True:
-    os.system('cls')
+    os.system('cls'os.system("cls" if os.name == "nt" else "clear"))
     print(bintang)
     print(" SELAMAT DATANG DI VLAOTRACKER ".center(45, "="))
     print(bintang)
