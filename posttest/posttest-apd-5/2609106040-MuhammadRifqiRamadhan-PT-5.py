@@ -110,7 +110,6 @@ while True:
                 
         accounts.append([new_username, new_password, "user"])
         print("Registrasi Berhasil, Silakan Login.")
-        print(acc)
         input("Tekan ENTER untuk kembali...")
         continue
     
@@ -841,8 +840,6 @@ while True:
                                 map_agent_a_terdikit = f"Map {map_a_terdikit} (Agent {agent_a_terdikit})"
                             
                             for match in user_matches:
-                                print(user_matches)
-                                print(match)
                                 # Hitung W/L/T
                                 if match[4] == "W":
                                     menang += 1
