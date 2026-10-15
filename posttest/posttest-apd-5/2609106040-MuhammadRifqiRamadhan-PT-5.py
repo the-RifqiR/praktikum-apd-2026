@@ -3,13 +3,13 @@ import os
 # Format: [username, password, role]
 accounts = [
     ["adminvlao", "admin123", "admin"],
-    ["aja", "041", "user"],
+    ["rifqi", "040", "user"],
     ["bang lari", "068", "user"]
 ]
 
 daftar_rank = ("Iron", "Bronze", "Silver", "Gold", "Platinum","Diamond", "Ascendant", "Immortal", "Radiant")
 
-daftar_map = ["Ascent", "Bind", "Haven", "Split", "Lotus", "Sunset", "Abyss", "Corrode", "Icebox", "Summit", "Pearl"]
+daftar_map = ["Ascent", "Bind", "Haven", "Split", "Lotus", "Sunset", "Abyss", "Corrode", "Icebox", "Summit", "Pearl", "Fracture", "Breeze"]
 
 daftar_role = ["Duelist", "Initiator", "Controller", "Sentinel"]
 daftar_agents = [
@@ -55,7 +55,7 @@ input("Enter Kalau Gak Mau Baca Yappingan")
 print(f"{bintang}")
 
 while True:
-    os.system('cls'os.system("cls" if os.name == "nt" else "clear"))
+    os.system("cls" if os.name == "nt" else "clear")
     print(bintang)
     print(" SELAMAT DATANG DI VLAOTRACKER ".center(45, "="))
     print(bintang)
@@ -83,7 +83,7 @@ while True:
         break
     
     elif menu_awal == 3:
-        os.system('cls')
+        os.system("cls" if os.name == "nt" else "clear")
         print(bintang)
         print(" REGISTER AKUN BARU ".center(45, "="))
         print(bintang)
@@ -114,7 +114,7 @@ while True:
         input("Tekan ENTER untuk kembali...")
         continue
     
-    os.system('cls')
+    os.system("cls" if os.name == "nt" else "clear")
     if menu_awal == 1:
         print(" LOGIN ADMIN ".center(45, "="))
         target_role = "admin"
@@ -662,7 +662,6 @@ while True:
                                     break
                                 print("Jawab dengan y/ya atau t/tidak!")
                             ganti_rr = (jawab == "y" or jawab == "ya")
- 
 
                         if ganti_rr:
                             while True:
@@ -684,37 +683,6 @@ while True:
                                 else:
                                     break
  
-                            if hasilBaru == "W":
-                                rr_baru = int(inputRR)
-                            elif hasilBaru == "L":
-                                rr_baru = -int(inputRR)
-                            else:
-                                rr_baru = int(inputRR)
-                                
-                        while True:
-                            jawab = input(f"\nGanti RR Yang Didapat? (sekarang: {match[8]:+}) (y/t): ").strip().lower()
-                            if jawab in ("y", "ya", "t", "tidak"):
-                                    break
-                            print("Jawab dengan y/ya atau t/tidak!")
-                        if jawab == "y" or jawab == "ya":
-                            while True:
-                                if hasilBaru == "W":
-                                    inputRR = input("RR Yang Didapat, tanpa simbol: ").strip()
-                                elif hasilBaru == "L":
-                                    inputRR = input("RR Yang Didapat, tanpa simbol: ").strip()
-                                else:    
-                                    inputRR = input("RR Yang Didapat, tanpa simbol: ").strip()
-                                if inputRR == "":
-                                    print("Jangan kosong")
-                                elif hasilBaru != "T" and not inputRR.isdigit():
-                                    print("Angka aja")
-                                elif hasilBaru == "T" and not (inputRR.isdigit() or (inputRR.startswith("-") and inputRR[1:].isdigit())):
-                                    print("Format rr salah")
-                                elif hasilBaru != "T" and int(inputRR) == 0:
-                                    print("Minimal dapat 1 rr lah kalau gk draw")
-                                else:
-                                    break
-                                
                             if hasilBaru == "W":
                                 rr_baru = int(inputRR)
                             elif hasilBaru == "L":
