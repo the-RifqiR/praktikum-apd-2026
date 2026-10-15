@@ -16,6 +16,8 @@ daftar_agents = [
     ["Sage", "Cypher", "Killjoy", "Chamber", "Deadlock", "Vyse"]  # Sentinel
 ]
 
+data_performa = []
+
 bintang = "=" * 45
 while True:
     os.system('cls')
@@ -158,4 +160,55 @@ while True:
                 else:
                     print("\nPilihan role gak ada")
                 input("\nTekan ENTER untuk lanjut...")
+
+            elif inputPilih == "3":
+                os.system("cls" if os.name == "nt" else "clear")
+                print("=== REKAP PERFORMA SEMUA PENGGUNA ===\n")
+                if len(data_performa) == 0:
+                    print("Belum ada data rekap performa dari user.")
+                else:
+                    for data in data_performa:
+                        print(f"Username: {data[0]} | Total Game Tercatat: {len(data[3])}")
+                input("\nTekan ENTER untuk lanjut...")
                 
+            elif inputPilih == "4":
+                break
+            else:
+                print("Pilihan gak ada")
+                input("Tekan ENTER...")
+                
+    elif target_role == "user":
+        user_data_index = -1
+        for i in range(len(data_performa)):
+            if data_performa[i][0] == inputUsername:
+                user_data_index = i
+                break
+
+        if user_data_index == -1:
+            # formatnya username, rank, rr, [data game]
+            data_performa.append([inputUsername, 0, 0, []])
+            user_data_index = len(data_performa) - 1
+        langsung_ke_crud = False
+        
+        while True:
+            if langsung_ke_crud:
+                inputUserMenu = "2"
+                langsung_ke_crud= False
+            else:
+                os.system("cls" if os.name == "nt" else "clear")
+                print(bintang)
+                print(f" DASHBOARD USER ({inputUsername}) ".center(45, "="))
+                print(bintang)
+                print("1. Catat Performa Game Baru")
+                print("2. Menu Kelola & Statistik Performa (CRUD)")
+                print("3. Logout (Kembali ke Beranda)")
+                print(bintang)
+
+                inputUserMenu = input("Pilih menu (1-3): ").strip()
+
+            if inputUserMenu == "1":
+                os.system("cls" if os.name == "nt" else "clear")
+                print("=== PENCATATAN PERFORMA VALORANT DI VLAOTRACKER ===\n")
+                # Input jumlah game
+                while True:
+                    jumlah_gim = input("Masukkan jumlah game yang ingin dicatat: ").strip()
