@@ -212,3 +212,124 @@ while True:
                 # Input jumlah game
                 while True:
                     jumlah_gim = input("Masukkan jumlah game yang ingin dicatat: ").strip()
+                    if jumlah_gim.isdigit() and int(jumlah_gim) > 0:
+                        jumlah_gim = int(jumlah_gim)
+                        break
+                    print("Masukkan angka bulat positif!")
+                if len(data_performa[user_data_index][3]) == 0:
+                    while True:
+                        print("\nPilih Rank Saat Ini:")
+                        for rank in range(len(daftar_rank)):
+                            print(f"{rank+1}. {daftar_rank[rank]}")
+                        inputRank = input("Pilih nomor rank (1-9): ").strip()
+                        if inputRank.isdigit() and 1 <= int(inputRank) <= len(daftar_rank):
+                            data_performa[user_data_index][1] = int(inputRank) - 1
+                            break
+                        print("Pilihan tidak valid!")
+                    rank_awal_user = data_performa[user_data_index][1]
+                    rank_tertinggi = len(daftar_rank) - 1
+                    while True:
+                        if rank_awal_user == rank_tertinggi:
+                            rr_awal = input("Masukkan RR saat ini (minimal 0, tanpa batas atas): ").strip()
+                        else:
+                            rr_awal = input("Masukkan RR saat ini (0-99): ").strip()
+                        if rr_awal == "":
+                            print("RR tidak boleh kosong!")
+                        elif not rr_awal.isdigit():
+                            print("RR harus berupa angka bulat dan tidak boleh negatif!")
+                        elif rank_awal_user != rank_tertinggi and int(rr_awal) > 99:
+                            print("RR maksimal 99! RR 100 ke atas hanya untuk rank Radiant.")
+                        else:
+                            data_performa[user_data_index][2] = int(rr_awal)
+                            break
+                        
+                for gim in range(jumlah_gim):
+                    print(f"\n--- GAME KE-{gim + 1} DARI {jumlah_gim} ---")
+                    print("\nDaftar Map:")
+                # ==========    ==============================================
+                    for peta in range(len(daftar_map)):
+                        print(f"{peta+1}. {daftar_map[peta]}")
+                    while True:
+                        inputMap = input("Pilih nomor map: ").strip()
+                        if inputMap.isdigit() and 1 <= int(inputMap) <= len(daftar_map):
+                            nama_map = daftar_map[int(inputMap)-1]
+                            break
+                        print("Nomor map tidak valid!")
+                    # ==========    ============================================== 
+                    print("\nPilih Role Agent:")
+                    for no_role_agent in range(len(daftar_role)):
+                        print(f"{no_role_agent + 1}. {daftar_role[no_role_agent]}")
+                    while True:
+                        input_role = input("Pilih nomor role (1-4): ").strip()
+                        if input_role.isdigit() and 1 <= int(input_role) <= 4:
+                            no_role = int(input_role) - 1
+                            break
+                        print("Role tidak valid!")
+                    # ==========    ======================================================
+                    print(f"\nDaftar Agent {daftar_role[no_role]}:")
+                    agents_list = daftar_agents[no_role]
+                    for agent in range(len(agents_list)):
+                        print(f"{agent + 1}. {agents_list[agent]}")
+                    while True:
+                        pilihAgent = input("Pilih nomor agent: ").strip()
+                        if pilihAgent.isdigit() and 1 <= int(pilihAgent) <= len(agents_list):
+                            nama_agent = agents_list[int(pilihAgent)-1]
+                            break
+                        print("Nomor agent tidak valid!")
+                    # ==========    ======================================================
+                    while True:
+                        round_w = input("Jumlah Round Menang (Win Round): ").strip()
+                        round_l = input("Jumlah Round Kalah (Lose Round): ").strip()
+                        if round_w.isdigit() and round_l.isdigit():
+                            round_w = int(round_w)
+                            round_l = int(round_l)
+                            break
+                        print("Score round harus berupa angka!")
+                    # Tentukan hasil otomatis (W / L / T)
+                    if round_w > round_l:
+                        hasil = "W"
+                    elif round_l > round_w:
+                        hasil = "L"
+                    else:
+                        hasil = "T"
+                    # 6. Input KDA
+                    while True:
+                        k = input("Total Kill: ").strip()
+                        d = input("Total Death: ").strip()
+                        a = input("Total Assist: ").strip()
+                        if k.isdigit() and d.isdigit() and a.isdigit():
+                            k, d, a = int(k), int(d), int(a)
+                            break
+                        print("KDA harus berupa angka!")
+                   
+                    while True:
+                        if hasil == "W":
+                            inputRR = input("RR Yang Didapat, tanpa simbol (+/-): ").strip()
+                        elif hasil == "L":    
+                            inputRR = input("RR Yang Didapat, tanpa simbol (+/-): ").strip()
+                        else:
+                            inputRR = input("RR Yang Didapat: ").strip()
+                            
+                        if inputRR == "":
+                            print("Gak boleh kosong")
+                        elif hasil != "T" and not inputRR.isdigit():
+                            print("Hanya angka")
+                        elif hasil == "T" and not (inputRR.isdigit() or (inputRR.startswith("-") and inputRR[1:].isdigit())):
+                            print("Format salah")
+                        elif hasil != "T" and int(inputRR) == 0:
+                            print("Lah memangnya RR gak + atau - 🐧? minimal 1 RR lah")
+                        else:
+                            break
+                    
+                    if hasil == "W":
+                        rr_change = int(inputRR)
+                    elif hasil == "L":
+                        rr_change = -int(inputRR)
+                    else:
+                        rr_change = int(inputRR)
+
+                        # nama map[0], nama agen[1], round w[2], round l[3], hasil[4], kill[5],death[6], asist[7], rr yang didapat[8]
+                    match_item = [nama_map, nama_agent, round_w, round_l, hasil, k, d, a, rr_change]
+                    data_performa[user_data_index][3].append(match_item)
+                print("\n\033[92mSemua data Game berhasil dicatat!\033[0m")
+                input("Tekan ENTER untuk kembali...")
