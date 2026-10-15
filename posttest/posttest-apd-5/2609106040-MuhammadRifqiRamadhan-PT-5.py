@@ -333,3 +333,33 @@ while True:
                     data_performa[user_data_index][3].append(match_item)
                 print("\n\033[92mSemua data Game berhasil dicatat!\033[0m")
                 input("Tekan ENTER untuk kembali...")
+
+            elif inputUserMenu == "2":
+                while True:
+                    os.system("cls" if os.name == "nt" else "clear")
+                    print(bintang)
+                    print(" KELOLA & STATISTIK PERFORMA ".center(45, "="))
+                    print(bintang)
+                    print("1. Lihat Data Per Game (List Game)")
+                    print("2. Tambah Data Game")
+                    print("3. Update Data Game")
+                    print("4. Delete (Hapus) Data Game")
+                    print("5. Lihat Statistik & Rekap Lengkap")
+                    print("6. Kembali ke Dashboard")
+                    print(bintang)
+                    pilih_crud = input("Pilih menu (1-6): ").strip().lower()
+                    
+                    # variabelnya nampung data pergame
+                    user_matches = data_performa[user_data_index][3]
+                    
+                    if pilih_crud == "1":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        print("=== DAFTAR GAME TERCATAT ===\n")
+                        if len(user_matches) == 0:
+                            print("Belum ada data Game yang dimasukkan.")
+                        else:
+                            for idx_match in range(len(user_matches)):
+                                match = user_matches[idx_match]
+                                print(f"Game #{idx_match+1} | Map: {match[0]} | Agent: {match[1]} | Hasil: {match[4]} ({match[2]}-{match[3]}) | KDA: {match[5]}/{match[6]}/{match[7]} | RR: {match[8]}")
+                        input("\nTekan ENTER untuk kembali...")
+
