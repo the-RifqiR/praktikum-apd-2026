@@ -105,12 +105,12 @@
 # print(game)
 
 
-menu = {
-"ayam" : ["ayam geprek", "ayam goreng", "ayam bakar"],
-"nasi" : ["nasi goreng", "nasi uduk"],
-"mie" : ["mie goreng rendang", "mie goreng aceh"],
-"kuah" : ["soto", "rawon", "sop iga"]
-}
+# menu = {
+# "ayam" : ["ayam geprek", "ayam goreng", "ayam bakar"],
+# "nasi" : ["nasi goreng", "nasi uduk"],
+# "mie" : ["mie goreng rendang", "mie goreng aceh"],
+# "kuah" : ["soto", "rawon", "sop iga"]
+# }
 
 
 # for i, j in menu.items():
