@@ -78,8 +78,8 @@ abad ini: VLAOTRACKER
 
 Dibuat dengan sepenuh hati, secangkir kopi, dan 
 sedikit kepanikan (bohong aja padahal panik banget, duh gusti) demi menyelesaikan posttest 
-tercinta dari Kakak-kakak Aslab kelas B1 paling 
-keren sejagat raya:
+tercinta dari Kakak-kakak....eh salah ya, maksudnya Abang dan Mba Aslab kelas B1 paling 
+keren sejagat raya bumi antero galaxy:
 -> NLG'25 (068)
 -> R'25   (106)
 -> SNA'25 (016)
@@ -89,15 +89,16 @@ Kesamaannya apa adik adik? benar, sama-sama akt 2025 absennya ada 6, wait... 666
 Program ini didedikasikan buat para pejuang 
 Ranked Valorant yang mau nge-track performa 
 tanpa kesalahan berfikir, dan tentunya sudah disesuaikan (ekspetasinya tolong dijaga) 
-dengan jalur hukum "List & Tuple"  biar aman 
-sentosa waktu diperiksa (keburu diangkat saber).
+dengan jalur hukum tiba tiba diganti jadi "Dictionary"  biar aman 
+sentosa waktu diperiksa (ini mah.. keburu diangkat saber).
 NAH INI BARU
 MY KARYA GUWEH
 
-Intinya: Catat performa, hindari salah indeks, 
-semoga lulus posttest, dan jangan lupa senyum ya Aslab Aslab Aslab Aslab sibuk banget kaya penjabat! Yey! 🎉
+Intinya: Catat performa, tampilin stat. 
+semoga lulus posttest, dan jangan lupa senyum ya Aslab Aslab Aslab Aslab sibuk banget kaya \033[9mpenjabat\033[0m guah (ermmm ini dari stiker btw bukan saya yang ngomong :D) Yey! 🎉
 time to lock in
 =====================================================''')
+input("Enter Kalau Gak Mau Baca Yappingan")  
 input("Enter Kalau Gak Mau Baca Yappingan")
 print(f"{bintang}")
 
@@ -177,8 +178,9 @@ while True:
     
     login_sukses = False
     daftar_akun = accounts[inputUsername]
+    
     # kalau username sama dan password sama dan role sama
-    if  daftar_akun and inputPassword == daftar_akun["password"] and  target_role == daftar_akun["role"]:
+    if daftar_akun is not None and inputPassword == daftar_akun.get("password") and target_role == daftar_akun.get("role"):
         login_sukses = True
         
     if not login_sukses:
@@ -211,34 +213,45 @@ while True:
             elif inputPilih == "1":
                 os.system("cls" if os.name == "nt" else "clear")
                 print("=== TAMBAH MAP ===")
-                map_baru = input("Masukkan nama map baru: ").strip().upper()
+                map_baru = input("Masukkan nama map baru: ").strip()
+                map_sudah_ada = False
+                for nama_map in daftar_map:
+                    if nama_map.upper() == map_baru.upper():
+                        map_sudah_ada = True
                 if map_baru == "":
                     print("Nama map tidak boleh kosong!")
-                    
-                elif map_baru in [nama.upper() for nama in daftar_map]:
+                elif map_sudah_ada:
                     print("Map tersebut sudah terdaftar!")
-                    
                 else:
-                    daftar_map.append(map_baru)
+                    daftar_map[map_baru] = True
                     print(f"\nMap '{map_baru}' berhasil tambah")
                 input("\nTekan ENTER untuk lanjut...")
             elif inputPilih == "2":
                 os.system("cls" if os.name == "nt" else "clear")
                 print("=== TAMBAH AGENT ===")
                 print("Pilih Role Agent: ")
-                for i in range(len(daftar_role)):
-                    print(f"{i+1}. {daftar_role[i]}")
+                pilihan_role = {}
+                nomor = 1
+                for nama_role in agents:
+                    pilihan_role[nomor] = nama_role
+                    print(f"{nomor}. {nama_role}")
+                    nomor += 1
                 
                 input_role = input("Pilih nomor role (1-4): ").strip()
-                if input_role.isdigit() and 1 <= int(input_role) <= len(daftar_agents):
-                    idx_r = int(input_role) - 1
-                    agent_baru = input(f"Masukkan nama agent untuk {daftar_role[idx_r]}: ").strip().upper()
+                if input_role.isdigit() and int(input_role) in pilihan_role:
+                    nama_role = pilihan_role[int(input_role)]
+                    agent_baru = input(f"Masukkan nama agent untuk {nama_role}: ").strip()
+                    agent_sudah_ada = False
+                    for nama_agent in agents[nama_role]:
+                        if nama_agent.upper() == agent_baru.upper():
+                            agent_sudah_ada = True
+                            
                     if agent_baru == "":
                         print("Nama agent tidak boleh kosong!")
-                    elif agent_baru in [nama.upper() for nama in daftar_agents[idx_r]]:
+                    elif agent_sudah_ada:
                         print("Agent tersebut sudah terdaftar pada role ini!")
                     else:
-                        daftar_agents[idx_r].append(agent_baru)
+                        agents[nama_role][agent_baru] = True
                         print(f"\nAgent '{agent_baru}' berhasil tambah")
                 else:
                     print("\nPilihan role gak ada")
@@ -250,8 +263,8 @@ while True:
                 if len(data_performa) == 0:
                     print("Belum ada data rekap performa dari user.")
                 else:
-                    for data in data_performa:
-                        print(f"Username: {data[0]} | Total Game Tercatat: {len(data[3])}")
+                    for username, data_game in data_performa.items():
+                        print(f"Username: {username} | Total Game Tercatat: {len(data_game['history_catat'])}")
                 input("\nTekan ENTER untuk lanjut...")
                 
             elif inputPilih == "4":
@@ -261,16 +274,15 @@ while True:
                 input("Tekan ENTER...")
                 
     elif target_role == "user":
-        user_data_index = -1
-        for i in range(len(data_performa)):
-            if data_performa[i][0] == inputUsername:
-                user_data_index = i
-                break
+        # akun ini punya data?
+        if inputUsername not in data_performa:
+            data_performa[inputUsername] = {
+                "rank" : 1,
+                "rr_awal" : 0,
+                "history_catat" : {}
+            }
 
-        if user_data_index == -1:
-            # formatnya username, rank, rr, [data game]
-            data_performa.append([inputUsername, 0, 0, []])
-            user_data_index = len(data_performa) - 1
+        user_data = data_performa[inputUsername]
         langsung_ke_crud = False
         
         while True:
@@ -961,7 +973,7 @@ while True:
                                 rr_butuh = f"{100 - current_rr} RR lagi menuju {daftar_rank[current_rank + 1]} HIHIHI"
                             
                             print(f"Total Game Dimainkan    : {total_game}")
-                            print(f"Menang (W) / Kalah (L)  : {menang} Menang | {kalah} Kalah | {seri} Seri")
+                            print(f"Menang (W) / Kalah (L)  / Seri (T): {menang} Menang | {kalah} Kalah | {seri} Seri")
                             print(f"Total KDA               : {sum_k} / {sum_d} / {sum_a}")
                             print(f"Rata-rata KDA per Game  : {avg_k:.1f} / {avg_d:.1f} / {avg_a:.1f}")
                             
