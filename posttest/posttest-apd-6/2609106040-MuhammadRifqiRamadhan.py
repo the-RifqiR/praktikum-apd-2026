@@ -1,11 +1,4 @@
 import os
-
-# Format: [username, password, role]
-# accounts = [
-#     ["adminvlao", "admin123", "admin"],
-#     ["rifqi", "040", "user"],
-#     ["bang lari", "068", "user"]
-# ]
 accounts = {
     "adminvlao" : {
         "password" : "admin123",
@@ -21,7 +14,6 @@ accounts = {
         },
 }
 
-
 daftar_rank = {
     1: "Iron",
     2: "Bronze",
@@ -34,7 +26,6 @@ daftar_rank = {
     9: "Radiant",
 }
 
-# daftar_map = ["Ascent", "Bind", "Haven", "Split", "Lotus", "Sunset", "Abyss", "Corrode", "Icebox", "Summit", "Pearl", "Fracture", "Breeze"]
 daftar_map = {
     "Ascent": True,
     "Bind": True,
@@ -51,14 +42,6 @@ daftar_map = {
     "Breeze": True,
 }
 
-# daftar_role = ["Duelist", "Initiator", "Controller", "Sentinel"]
-# daftar_agents = [
-#     ["Jett", "Phoenix", "Raze", "Reyna", "Yoru", "Neon", "Iso", "Waylay"],  # Duelist
-#     ["Breach", "Sova", "Skye", "Kayo", "Fade", "Gekko", "Tejo"], # Initiator
-#     ["Brimstone", "Omen", "Viper", "Astra", "Harbor", "Clove", "Miks"], # Controller
-#     ["Sage", "Cypher", "Killjoy", "Chamber", "Deadlock", "Vyse"]  # Sentinel
-# ]
-
 agents = {
     "Duelist": {"Jett": True, "Phoenix": True, "Raze": True, "Reyna": True, "Yoru": True, "Neon": True, "Iso": True, "Waylay": True, "Hush": True},
     "Initiator": {"Breach": True, "Sova": True, "Skye": True, "Kayo": True, "Fade": True, "Gekko": True, "Tejo": True},
@@ -69,7 +52,6 @@ agents = {
 data_performa = {}
 
 bintang = "=" * 45
-
 os.system("cls" if os.name == "nt" else "clear")
 # Nama Programnya VlaoTracker, Apa? Typo? Engga memang gitu namanya. Coba aja ketik Valo cepat cepat lewat keyboard layout hp
 print('''=====================================================
@@ -99,7 +81,6 @@ semoga lulus posttest, dan jangan lupa senyum ya Aslab Aslab Aslab Aslab sibuk b
 time to lock in
 =====================================================''')
 input("Enter Kalau Gak Mau Baca Yappingan")  
-input("Enter Kalau Gak Mau Baca Yappingan")
 print(f"{bintang}")
 
 while True:
@@ -143,6 +124,7 @@ while True:
             for acc in accounts:
                 if acc == new_username:
                     sudah_ada = True
+                    
             if new_username == "":
                 print("Username tidak boleh kosong!")
             elif sudah_ada:
@@ -179,7 +161,7 @@ while True:
     login_sukses = False
     daftar_akun = accounts[inputUsername]
     
-    # kalau username sama dan password sama dan role sama
+    # kalau username sama dan password sama dan role sama maka masuk
     if daftar_akun is not None and inputPassword == daftar_akun.get("password") and target_role == daftar_akun.get("role"):
         login_sukses = True
         
@@ -212,9 +194,11 @@ while True:
                 
             elif inputPilih == "1":
                 os.system("cls" if os.name == "nt" else "clear")
+                
                 print("=== TAMBAH MAP ===")
                 map_baru = input("Masukkan nama map baru: ").strip()
                 map_sudah_ada = False
+                
                 for nama_map in daftar_map:
                     if nama_map.upper() == map_baru.upper():
                         map_sudah_ada = True
@@ -226,8 +210,10 @@ while True:
                     daftar_map[map_baru] = True
                     print(f"\nMap '{map_baru}' berhasil tambah")
                 input("\nTekan ENTER untuk lanjut...")
+                
             elif inputPilih == "2":
                 os.system("cls" if os.name == "nt" else "clear")
+                
                 print("=== TAMBAH AGENT ===")
                 print("Pilih Role Agent: ")
                 pilihan_role = {}
@@ -240,12 +226,13 @@ while True:
                 input_role = input("Pilih nomor role (1-4): ").strip()
                 if input_role.isdigit() and int(input_role) in pilihan_role:
                     nama_role = pilihan_role[int(input_role)]
+                    
                     agent_baru = input(f"Masukkan nama agent untuk {nama_role}: ").strip()
                     agent_sudah_ada = False
-                    for nama_agent in agents[nama_role]:
-                        if nama_agent.upper() == agent_baru.upper():
+                
+                    for idx_nama_agent in agents[nama_role]:
+                        if idx_nama_agent.upper() == agent_baru.upper():
                             agent_sudah_ada = True
-                            
                     if agent_baru == "":
                         print("Nama agent tidak boleh kosong!")
                     elif agent_sudah_ada:
@@ -263,8 +250,8 @@ while True:
                 if len(data_performa) == 0:
                     print("Belum ada data rekap performa dari user.")
                 else:
-                    for username, data_game in data_performa.items():
-                        print(f"Username: {username} | Total Game Tercatat: {len(data_game['history_catat'])}")
+                    for username, data_user in data_performa.items():
+                        print(f"Username: {username} | Total Game Tercatat: {len(data_user['history_catat'])}")
                 input("\nTekan ENTER untuk lanjut...")
                 
             elif inputPilih == "4":
@@ -315,30 +302,30 @@ while True:
                     
                 if len(user_data["history_catat"]) == 0:
                     while True:
-                        # nampilin rank
                         print("\nPilih Rank Saat Ini:")
+                        # daftarnya
                         for nomor, nama_rank in daftar_rank.items():
                             print(f"{nomor}. {nama_rank}")
                         
-                        # input rank
+                        # inputnya
                         inputRank = input("Pilih nomor rank (1-9): ").strip()
                         if inputRank.isdigit() and 1 <= int(inputRank) <= len(daftar_rank):
-                            data_performa[user_data_index][1] = int(inputRank) - 1
+                            user_data["rank"] = int(inputRank)
                             break
                         print("Pilihan tidak valid!")
-                        
                     rank_awal_user = user_data["rank"]
                     rank_tertinggi = len(daftar_rank)
                     while True:
                         if rank_awal_user == rank_tertinggi:
-                            rr_awal = input("Masukkan RR saat ini (minimal 0, tanpa batas atas): ").strip()
+                            input_rr_awal = input("Masukkan RR saat ini (minimal 0, tanpa batas atas): ").strip()
                         else:
-                            rr_awal = input("Masukkan RR saat ini (0-99): ").strip()
-                        if rr_awal == "":
+                            input_rr_awal = input("Masukkan RR saat ini (0-99): ").strip()
+                            
+                        if input_rr_awal == "":
                             print("RR tidak boleh kosong!")
-                        elif not rr_awal.isdigit():
+                        elif not input_rr_awal.isdigit():
                             print("RR harus berupa angka bulat dan tidak boleh negatif!")
-                        elif rank_awal_user != rank_tertinggi and int(rr_awal) > 99:
+                        elif rank_awal_user != rank_tertinggi and int(input_rr_awal) > 99:
                             print("RR maksimal 99! RR 100 ke atas hanya untuk rank Radiant.")
                         else:
                             user_data["rr_awal"] = int(input_rr_awal)
@@ -348,30 +335,30 @@ while True:
                     print(f"\n--- GAME KE-{gim + 1} DARI {jumlah_gim} ---")
                     # daftar map
                     pilihan_map = {}
-                    no = 1
+                    nomor_map = 1
                     print("\nDaftar Map:")
                     for nama_map in daftar_map:
-                        pilihan_map[no] = nama_map
-                        print(f"{no}. {nama_map}")
-                        no += 1
+                        pilihan_map[nomor_map] = nama_map
+                        print(f"{nomor_map}. {nama_map}")
+                        nomor_map += 1
                         
                     # input map
                     while True:
                         inputMap = input("Pilih nomor map: ").strip()
                         if inputMap.isdigit() and int(inputMap) in pilihan_map:
-                            nama_map_terpilih = pilihan_map[int(inputMap)-1]
+                            nama_map_terpilih = pilihan_map[int(inputMap)]
                             break
                         print("Nomor map tidak valid!")
                     # ==========    ============================================== 
                     # daftarnya
                     print("\nPilih Role Agent:")
                     pilihan_role = {}
-                    no = 1
+                    nomor_role = 1
                     
-                    for nama_role  in agents:
-                        pilihan_role[no] = nama_role
-                        print(f"{no}. {nama_role}")
-                        no += 1
+                    for nama_role in agents:
+                        pilihan_role[nomor_role] = nama_role
+                        print(f"{nomor_role}. {nama_role}")
+                        nomor_role += 1
                         
                     # inputnya
                     while True:
@@ -382,21 +369,21 @@ while True:
                         print("Role tidak valid!")
                     # ==========    ======================================================
                         # daftar
-                        print(f"\nDaftar Agent Role {role_agent}:")
-                        pilihan_agent = {}
-                        no = 1
-                        for nama_agent in agents[role_agent]:
-                            pilihan_agent[no] = nama_agent
-                            print(f"{no}. {nama_agent}")
-                            no += 1
-                        
-                        # inputnya
-                        while True:
-                            pilihAgent = input("Pilih nomor agent: ").strip()
-                            if pilihAgent.isdigit() and int(pilihAgent) in pilihan_agent:
-                                nama_agent = pilihan_agent[int(pilihAgent)]
-                                break
-                            print("Nomor agent tidak valid!")
+                    pilihan_agent = {}
+                    nomor_agent = 1
+                    print(f"\nDaftar Agent Role {role_agent}:")
+                    for idx_nama_agent in agents[role_agent]:
+                        pilihan_agent[nomor_agent] = idx_nama_agent
+                        print(f"{nomor_agent}. {idx_nama_agent}")
+                        nomor_agent += 1
+                    
+                    # inputnya
+                    while True:
+                        pilihAgent = input("Pilih nomor agent: ").strip()
+                        if pilihAgent.isdigit() and int(pilihAgent) in pilihan_agent:
+                            nama_agent_terpilih = pilihan_agent[int(pilihAgent)]
+                            break
+                        print("Nomor agent tidak valid!")
                     # ==========    ======================================================
                     while True:
                         round_w = input("Jumlah Round Menang (Win Round): ").strip()
@@ -449,21 +436,13 @@ while True:
                     else:
                         rr_change = int(inputRR)
 
-                    match_item = {  "map": nama_map, 
-                                  "agent": nama_agent, 
-                                  "round_w": round_w, 
-                                  "round_l": round_l, 
-                                  "hasil": hasil, 
-                                  "kill": k, 
-                                  "death": d,
-                                  "assist": a, 
-                                  "rr": rr_change
-                                  }
-                    
+                    match_item = {  "map": nama_map_terpilih, "agent": nama_agent_terpilih, "round_w": round_w, "round_l": round_l, "hasil": hasil, "kill": k, "death": d, "assist": a, "rr": rr_change}
                     user_data["history_catat"][len(user_data["history_catat"]) + 1] = match_item
+                    
                 print("\n\033[92mSemua data Game berhasil dicatat!\033[0m")
                 input("Tekan ENTER untuk kembali...")
                 langsung_ke_crud = True
+                
             elif inputUserMenu == "2":
                 while True:
                     os.system("cls" if os.name == "nt" else "clear")
@@ -480,7 +459,8 @@ while True:
                     pilih_crud = input("Pilih menu (1-6): ").strip().lower()
                     
                     # variabelnya nampung data pergame
-                    user_matches = data_performa[user_data_index][3]
+                    user_matches = user_data["history_catat"]
+                    # match_item = {  "map": nama_map_terpilih, "agent": nama_agent_terpilih, "round_w": round_w, "round_l": round_l, "hasil": hasil, "kill": k, "death": d, "assist": a, "rr": rr_change}
                     
                     if pilih_crud == "1":
                         os.system("cls" if os.name == "nt" else "clear")
@@ -488,9 +468,8 @@ while True:
                         if len(user_matches) == 0:
                             print("Belum ada data Game yang dimasukkan.")
                         else:
-                            for idx_match in range(len(user_matches)):
-                                match = user_matches[idx_match]
-                                print(f"Game #{idx_match+1} | Map: {match[0]} | Agent: {match[1]} | Hasil: {match[4]} ({match[2]}-{match[3]}) | KDA: {match[5]}/{match[6]}/{match[7]} | RR: {match[8]}")
+                            for nomor, match in user_matches.items():
+                                print(f"Game #{nomor} | Map: {match['map']} | Agent: {match['agent']} | Hasil: {match['hasil']} ({match['round_w']}-{match['round_l']}) | KDA: {match['kill']}/{match['death']}/{match['assist']} | RR: {match['rr']}")
                         input("\nTekan ENTER untuk kembali...")
                       
                     elif pilih_crud == "2":
@@ -540,7 +519,7 @@ while True:
                                 while True:
                                     pilihAgent = input("Pilih nomor agent: ").strip()
                                     if pilihAgent.isdigit() and 1 <= int(pilihAgent) <= len(agents_list):
-                                        nama_agent = agents_list[int(pilihAgent)-1]
+                                        idx_nama_agent = agents_list[int(pilihAgent)-1]
                                         break
                                     print("Nomor agent tidak valid!")
                                     
@@ -599,7 +578,7 @@ while True:
                                     rr_change = int(inputRR)
                                     
                                     # nama map[0], nama agen[1], round w[2], round l[3], hasil[4], kill[5],death[6], asist[7], rr yangdidapat  [8]
-                                match_item = [nama_map, nama_agent, round_w, round_l, hasil, k, d, a, rr_change]
+                                match_item = [nama_map, idx_nama_agent, round_w, round_l, hasil, k, d, a, rr_change]
                                 data_performa[user_data_index][3].append(match_item)
                                 
                             print("\n\033[92mSemua data Game berhasil dicatat!\033[0m")
@@ -998,6 +977,7 @@ while True:
                                 if agent_hitung_list[agi] > max_ag_val:
                                     max_ag_val = agent_hitung_list[agi]
                                     ag_tersering = agent_nama_list[agi]
+                                    
                             avg_k = sum_k / total_game
                             avg_d = sum_d / total_game
                             avg_a = sum_a / total_game
