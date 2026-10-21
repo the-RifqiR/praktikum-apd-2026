@@ -39,8 +39,29 @@
     
 # pengumuman("as")
 
-def keliling_persegi(sisi):
-    keliling = 4 * sisi
-    print(keliling)
+# def keliling_persegi(sisi):
+#     keliling = 4 * sisi
+#     print(keliling)
     
-keliling_persegi(5)
+# keliling_persegi(5)
+
+#Membuat variabel global
+# nama = "Larry"
+# prodi = "Informatika"
+#Membuat variabel lokal
+# def data():
+#     namav = "Teknik Kedokteran"
+#     prodiv = "Kedokteran Lanjut"
+#     print("Nama:", nama)
+#     print("Prodi:", prodi)
+#Mengakses variabel lokal
+# data()
+#Mengakses variabel global
+# print("Nama:", nama)
+# print("Prodi:", prodi)
+
+try:
+    nilai = input("berapa: ")
+    
+except:
+    print("hai")
