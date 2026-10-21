@@ -4,8 +4,8 @@ accounts = {
         "password" : "admin123",
         "role" : "admin",
         },
-    "aja" : {
-        "password" : "041",
+    "rifqi" : {
+        "password" : "040",
         "role" : "user",
         },
     "mbarisma" : {
@@ -159,7 +159,7 @@ while True:
     inputPassword = input("Password: ")
     
     login_sukses = False
-    daftar_akun = accounts[inputUsername]
+    daftar_akun = accounts.get(inputUsername)
     
     # kalau username sama dan password sama dan role sama maka masuk
     if daftar_akun is not None and inputPassword == daftar_akun.get("password") and target_role == daftar_akun.get("role"):
@@ -877,137 +877,119 @@ while True:
                             game_total_d = ""
                             game_total_a = ""
                             
-                            nama_map_list = []
-                            map_hitung_list = []
-                            agent_nama_list = []
-                            agent_hitung_list = []
+                           
+                            map_hitung = {}
+                            agent_hitung = {}
                             
-                            current_rank = data_performa[user_data_index][1]
-                            current_rr = data_performa[user_data_index][2]
+                            current_rank = user_data["rank"]
+                            current_rr = user_data["rr_awal"]
                             
                             if len(user_matches) > 0:
-                            # nama map[0], nama agen[1], round w[2], round l[3], hasil[4], kill[5],death[6], asist[7], rr yang didapat[8]
-                                kill_terdikit = user_matches[0][5]
-                                map_k_terdikit = user_matches[0][0]
-                                agent_k_terdikit = user_matches[0][1]
-                                map_agent_k_terdikit = f"Map {map_k_terdikit} (Agent {agent_k_terdikit})"
+
+                                kill_terdikit = user_matches[1]["kill"]
+                                map_k_terdikit = user_matches[1]["map"]
+                                agent_k_terdikit = user_matches[1]["agent"]
+                                map_agent_k_terdikit = (f"Map {map_k_terdikit} (Agent {agent_k_terdikit})")
                                 
-                                death_terdikit = user_matches[0][6]
-                                map_d_terdikit = user_matches[0][0]
-                                agent_d_terdikit = user_matches[0][1]
-                                map_agent_d_terdikit = f"Map {map_d_terdikit} (Agent {agent_d_terdikit})"
+                                death_terdikit = user_matches[1]["death"]
+                                map_d_terdikit = user_matches[1]["map"]
+                                agent_d_terdikit = user_matches[1]["agent"]
+                                map_agent_d_terdikit = (f"Map {map_d_terdikit} (Agent {agent_d_terdikit})")
+
+                                a_terdikit = user_matches[1]["assist"]
+                                map_a_terdikit = user_matches[1]["map"]
+                                agent_a_terdikit = user_matches[1]["agent"]
+                                map_agent_a_terdikit = (f"Map {map_a_terdikit} (Agent {agent_a_terdikit})")
                             
-                                a_terdikit = user_matches[0][7]
-                                map_a_terdikit = user_matches[0][0]
-                                agent_a_terdikit = user_matches[0][1]
-                                map_agent_a_terdikit = f"Map {map_a_terdikit} (Agent {agent_a_terdikit})"
-                            
-                            for match in user_matches:
+                            for nomor, match in user_matches.items():
                                 # Hitung W/L/T
-                                if match[4] == "W":
+                                if match["hasil"] == "W":
                                     menang += 1
-                                elif match[4] == "L":
+                                elif match["hasil"] == "L":
                                     kalah += 1
                                 else:
                                     seri += 1
                                     
                                 # Akumulasi KDA
-                                sum_k += match[5]
-                                sum_d += match[6]
-                                sum_a += match[7]
+                                sum_k += match["kill"]
+                                sum_d += match["death"]
+                                sum_a += match["assist"]
                                 
                                 # Cari Total K, D, A
-                                if match[5] > max_k:
-                                    max_k = match[5]
-                                    game_total_k = f"Map {match[0]} (Agent {match[1]})"
-                                if match[6] > max_d:
-                                    max_d = match[6]
-                                    game_total_d = f"Map {match[0]} (Agent {match[1]})"
-                                if match[7] > max_a:
-                                    max_a = match[7]
-                                    game_total_a = f"Map {match[0]} (Agent {match[1]})"
+                                if match["kill"] > max_k:
+                                    max_k = match["kill"]
+                                    game_total_k = f"Map {match['map']} (Agent {match['agent']})"
+                                if match["death"] > max_d:
+                                    max_d = match["death"]
+                                    game_total_d = f"Map {match['map']} (Agent {match['agent']})"
+                                if match["assist"] > max_a:
+                                    max_a = match["assist"]
+                                    game_total_a = f"Map {match['map']} (Agent {match['agent']})"
                                     
-                                kill_data_sekarang = match[5]
+                                kill_data_sekarang = match["kill"]
                                 if kill_data_sekarang < kill_terdikit:
                                     kill_terdikit = kill_data_sekarang
-                                    map_k_terdikit = match[0]
-                                    agent_k_terdikit = match[1]
+                                    map_k_terdikit = match["map"]
+                                    agent_k_terdikit = match["agent"]
                                     map_agent_k_terdikit = f"Map {map_k_terdikit} (Agent {agent_k_terdikit})"
                                     
-                                death_data_sekarang = match[6]
+                                death_data_sekarang = match["death"]
                                 if death_data_sekarang < death_terdikit:
                                     death_terdikit = death_data_sekarang
-                                    map_d_terdikit = match[0]
-                                    agent_d_terdikit = match[1]
+                                    map_d_terdikit = match["map"]
+                                    agent_d_terdikit = match["agent"]
                                     map_agent_d_terdikit = f"Map {map_d_terdikit} (Agent {agent_d_terdikit})"
                                     
-                                a_data_sekarang = match[7]
+                                a_data_sekarang = match["assist"]
                                 if a_data_sekarang < a_terdikit:
                                     a_terdikit = a_data_sekarang
-                                    map_a_terdikit = match[0]
-                                    agent_a_terdikit = match[1]
+                                    map_a_terdikit = match["map"]
+                                    agent_a_terdikit = match["agent"]
                                     map_agent_a_terdikit = f"Map {map_a_terdikit} (Agent {agent_a_terdikit})"
                                     
-                                # Hitung Map Terbanyak
-                                found_map = False
-                                for list_map in range(len(nama_map_list)):
-                                    if nama_map_list[list_map] == match[0]:
-                                        map_hitung_list[list_map] += 1
-                                        found_map = True
-                                        break
-                                if not found_map:
-                                    nama_map_list.append(match[0])
-                                    map_hitung_list.append(1)
-                                    
-                                # Hitung Agent Terbanyak
-                                found_ag = False
-                                for agi in range(len(agent_nama_list)):
-                                    if agent_nama_list[agi] == match[1]:
-                                        agent_hitung_list[agi] += 1
-                                        found_ag = True
-                                        break
-                                if not found_ag:
-                                    agent_nama_list.append(match[1])
-                                    agent_hitung_list.append(1)
-                                    
+                                # Hitung Map dan Agent Terbanyak
+                                map_hitung[match["map"]] = map_hitung.get(match["map"], 0) + 1
+                                agent_hitung[match["agent"]] = agent_hitung.get(match["agent"], 0) + 1
+                                                                    
                                 # Hitung perubahan RR & Rank Promosi/Demosi
-                                current_rr += match[8]
-                                while current_rr >= 100 and current_rank < len(daftar_rank) - 1:
+                                current_rr += match["rr"]
+                                while current_rr >= 100 and current_rank < len(daftar_rank):
                                     current_rr -= 100
                                     current_rank += 1
-                                while current_rr < 0 and current_rank > 0:
+                                while current_rr < 0 and current_rank > 1:
                                     current_rr += 100
                                     current_rank -= 1
-                                if current_rank == 0 and current_rr < 0:
+                                if current_rank == 1 and current_rr < 0:
                                     current_rr = 0
                                     
                             # Cari map paling sering dimainkan
-                            map_tersering = nama_map_list[0]
-                            max_m_val = map_hitung_list[0]
-                            for list_map in range(len(nama_map_list)):
-                                if map_hitung_list[list_map] > max_m_val:
-                                    max_m_val = map_hitung_list[list_map]
-                                    map_tersering = nama_map_list[list_map]
+                            map_tersering = ""
+                            max_m_val = 0
+                            for nama, jumlah in map_hitung.items():
+                                if jumlah > max_m_val:
+                                    max_m_val = jumlah
+                                    map_tersering = nama
                                     
                             # Cari agent paling sering dimainkan
-                            ag_tersering = agent_nama_list[0]
-                            max_ag_val = agent_hitung_list[0]
-                            for agi in range(len(agent_nama_list)):
-                                if agent_hitung_list[agi] > max_ag_val:
-                                    max_ag_val = agent_hitung_list[agi]
-                                    ag_tersering = agent_nama_list[agi]
+                            agent_sering_dimainin = ""
+                            max_ag_val = 0
+                            for nama, jumlah in agent_hitung.items():
+                                if jumlah > max_ag_val:
+                                    max_ag_val = jumlah
+                                    agent_sering_dimainin = nama
+                                    
                                     
                             avg_k = sum_k / total_game
                             avg_d = sum_d / total_game
                             avg_a = sum_a / total_game
                             
-                            if current_rank == len(daftar_rank) - 1:
+                            if current_rank == len(daftar_rank):
                                 rr_butuh = "Sudah rank tertinggi (Radiant)"
                             else:
                                 rr_butuh = f"{100 - current_rr} RR lagi menuju {daftar_rank[current_rank + 1]} HIHIHI"
                             
                             print(f"Total Game Dimainkan    : {total_game}")
-                            print(f"Menang (W) / Kalah (L)  / Seri (T): {menang} Menang | {kalah} Kalah | {seri} Seri")
+                            print(f"Menang (W) / Kalah (L)  : {menang} Menang | {kalah} Kalah | {seri} Seri")
                             print(f"Total KDA               : {sum_k} / {sum_d} / {sum_a}")
                             print(f"Rata-rata KDA per Game  : {avg_k:.1f} / {avg_d:.1f} / {avg_a:.1f}")
                             
@@ -1021,7 +1003,7 @@ while True:
                             print(f"Assist Terdikit          : {a_terdikit} ({map_agent_a_terdikit})")
                             
                             print(f"Map Paling Sering Main  : {map_tersering} ({max_m_val}x)")
-                            print(f"Agent Paling Sering Pakai: {ag_tersering} ({max_ag_val}x)")
+                            print(f"Agent Paling Sering Pakai: {agent_sering_dimainin} ({max_ag_val}x)")
                             print(f"Rank Saat Ini           : {daftar_rank[current_rank]} (RR: {current_rr})")
                             print(f"Sisa RR Menuju Rank Naik: {rr_butuh}")
                             print("="*45)
@@ -1036,3 +1018,4 @@ while True:
             else:
                 print("Pilihan tidak valid!")
                 input("Tekan ENTER...")
+# Abaikan 1000 line ini, kebanyakan yappingnya sama komentar tambahan hehehe
