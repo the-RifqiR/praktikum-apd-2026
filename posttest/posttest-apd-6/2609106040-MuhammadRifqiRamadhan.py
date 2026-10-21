@@ -605,25 +605,22 @@ while True:
                             input("\nTekan ENTER untuk kembali...")
                             continue
                         
-                        for idx_match in range(len(user_matches)):
-                            match = user_matches[idx_match]
-                            print(f"{idx_match + 1}. Map: {match[0]}")
-                            print(f"   Agent: {match[1]}")
-                            print(f"   Score: {match[2]}-{match[3]}")
-                            print(f"   Hasil: {match[4]}")
-                            print(f"   KDA: {match[5]}/{match[6]}/{match[7]}")
-                            print(f"   RR: {match[8]}")
+                        for nomor, match in user_matches.items():
+                            print(f"{nomor}. Map: {match['map']}")
+                            print(f"   Agent: {match['agent']}")
+                            print(f"   Score: {match['round_w']}-{match['round_l']}")
+                            print(f"   Hasil: {match['hasil']}")
+                            print(f"   KDA: {match['kill']}/{match['death']}/{match['assist']}")
+                            print(f"   RR: {match['rr']:+}")                            
                             
                         while True:        
                             input_nomor = input("\nMasukkan nomor game yang ingin diubah (atau 'kembali'): ").strip().lower()
-                        
                             if input_nomor == "kembali":
                                 print("\nUpdate dibatalkan")
                                 break
-                            
                             elif input_nomor.isdigit():
-                                if 1 <= int(input_nomor) <= len(user_matches):
-                                    idx_game_update = int(input_nomor) - 1
+                                nomor_game = int(input_nomor)
+                                if nomor_game in user_matches:
                                     break
                                 else:
                                     print("Data game gk ada")
@@ -633,75 +630,83 @@ while True:
                         if input_nomor == "kembali":
                             continue
                             
-                        match = user_matches[idx_game_update]
+                        match = user_matches[nomor_game]
                         print("\n=== DETAIL GAME YANG DIPILIH ===")
-                        print(f"Map   : {match[0]}")
-                        print(f"Agent : {match[1]}")
-                        print(f"Score : {match[2]}-{match[3]}")
-                        print(f"Hasil : {match[4]}")
-                        print(f"KDA   : {match[5]}/{match[6]}/{match[7]}")
-                        print(f"RR    : {match[8]:+}")
-                        map_baru = match[0]
-                        baru_agent = match[1]
-                        round_w_baru = match[2]
-                        round_l_baru = match[3]
-                        hasilBaru = match[4]
-                        kill_baru = match[5]
-                        death_baru = match[6]
-                        assist_baru = match[7]
-                        rr_baru = match[8]
+                        print(f"Map   : {match['map']}")
+                        print(f"Agent : {match['agent']}")
+                        print(f"Score : {match['round_w']}-{match['round_l']}")
+                        print(f"Hasil : {match['hasil']}")
+                        print(f"KDA   : {match['kill']}/{match['death']}/{match['assist']}")
+                        print(f"RR    : {match['rr']:+}")
+                        map_baru = match["map"]
+                        baru_agent = match["agent"]
+                        round_w_baru = match["round_w"]
+                        round_l_baru = match["round_l"]
+                        hasilBaru = match["hasil"]
+                        kill_baru = match["kill"]
+                        death_baru = match["death"]
+                        assist_baru = match["assist"]
+                        rr_baru = match["rr"]
+                        
                         print("\nMasukkan data baru:")
                         while True:
-                            jawab = input(f"\nGanti Map? (sekarang: {match[0]}) (y/t): ").strip().lower()
+                            jawab = input(f"\nGanti Map? (sekarang: {match['map']}) (y/t): ").strip().lower()
                             if jawab in ("y", "ya", "t", "tidak"):
                                     break
                             print("Jawab dengan y/ya atau t/tidak!")
-                        if jawab == "y" or jawab == "ya":
-                            
+                        if jawab == "y" or jawab == "ya":    
                             print("\nDaftar Map:")
-                            for i in range(len(daftar_map)):
-                                print(f"{i + 1}. {daftar_map[i]}")
+                            pilihan_map = {}
+                            nomor_map = 1
+                            for nama_map_tersedia in daftar_map:
+                                pilihan_map[nomor_map] = nama_map_tersedia
+                                print(f"{nomor_map}. {nama_map_tersedia}")
+                                nomor_map += 1
                                 
                             while True:
                                 input_map_baru = input("Pilih nomor map baru: ").strip()
-                                if (input_map_baru.isdigit() and 1 <= int(input_map_baru) <= len(daftar_map)):
-                                    map_baru = daftar_map[int(input_map_baru) - 1]
+                                if input_map_baru.isdigit() and int(input_map_baru) in pilihan_map:
+                                    map_baru = pilihan_map[int(input_map_baru)]
                                     break
                                 print("Nomor map tidak valid!")
-                        # 4. Update Agent
+                                
                         while True:
-                            jawab = input(f"\nGanti Agent? (sekarang: {match[1]}) (y/t): ").strip().lower()
+                            jawab = input(f"\nGanti Agent? (sekarang: {match['agent']}) (y/t): ").strip().lower()
                             if jawab in ("y", "ya", "t", "tidak"):
                                     break
                             print("Jawab dengan y/ya atau t/tidak!")
                         if jawab == "y" or jawab == "ya":
-                            
+                            pilihan_role = {}
+                            nomor_role = 1
                             print("\nDaftar Role:")
-                            for i in range(len(daftar_role)):
-                                print(f"{i + 1}. {daftar_role[i]}")
+                            for nama_role in agents:
+                                pilihan_role[nomor_role] = nama_role
+                                print(f"{nomor_role}. {nama_role}")
+                                nomor_role += 1
                                 
                             while True:
                                 input_role_baru = input("Pilih nomor role agent: ").strip()
-                                if (input_role_baru.isdigit() and 1 <= int(input_role_baru) <= len(daftar_role)):
-                                    idx_role = int(input_role_baru) - 1
+                                if input_role_baru.isdigit() and int(input_role_baru) in pilihan_role:
+                                    role_agent = pilihan_role[int(input_role_baru)]
                                     break
                                 print("Nomor role tidak valid!")
-                            agents_list = daftar_agents[idx_role]
-                            
-                            print(f"\nDaftar Agent {daftar_role[idx_role]}:")
-                            for i in range(len(agents_list)):
-                                print(f"{i + 1}. {agents_list[i]}")
+                            pilihan_agent = {}
+                            nomor_agent = 1
+
+                            print(f"\nDaftar Agent {role_agent}:")
+                            for nama_agent in agents[role_agent]:
+                                pilihan_agent[nomor_agent] = nama_agent
+                                print(f"{nomor_agent}. {nama_agent}")
+                                nomor_agent += 1
                             while True:
                                 pilih_agent_baru = input("Pilih nomor agent baru: ").strip()
-                                if (pilih_agent_baru.isdigit() and 1 <= int(pilih_agent_baru) <= len(agents_list)):
-                                    baru_agent = agents_list[int(pilih_agent_baru) - 1]
+                                if pilih_agent_baru.isdigit() and int(pilih_agent_baru) in pilihan_agent:
+                                    baru_agent = pilihan_agent[int(pilih_agent_baru)]
                                     break
                                 print("Nomor agent tidak valid!")
-                                
-                                
-                        # 5. Update score round
+
                         while True:
-                            jawab = input(f"\nGanti Score? (sekarang: {match[2]}-{match[3]}) (y/t): ").strip().lower()
+                            jawab = input(f"\nGanti Score? (sekarang: {match['round_w']}-{match['round_l']}) (y/t): ").strip().lower()
                             if jawab in ("y", "ya", "t", "tidak"):
                                     break
                             print("Jawab dengan y/ya atau t/tidak!")
@@ -714,16 +719,15 @@ while True:
                                     round_l_baru = int(input_baru_round_l)
                                     break
                                 print("Jumlah round harus berupa angka bulat positif atau 0!")
-                            # 6. Tentukan ulang hasil pertandingan
+                                
                             if round_w_baru > round_l_baru:
                                 hasilBaru = "W"
                             elif round_w_baru < round_l_baru:
                                 hasilBaru = "L"
                             else:
                                 hasilBaru = "T"
-                        # 7. Update Kill, Death, dan Assist
                         while True:
-                            jawab = input(f"\nGanti KDA? (sekarang: {match[5]}/{match[6]}/{match[7]}) (y/t): ").strip().lower()
+                            jawab = input(f"\nGanti KDA? (sekarang: {match['kill']}/{match['death']}/{match['assist']}) (y/t): ").strip().lower()
                             if jawab in ("y", "ya", "t", "tidak"):
                                     break
                             print("Jawab dengan y/ya atau t/tidak!")
@@ -738,13 +742,13 @@ while True:
                                     assist_baru = int(input_baru_a)
                                     break
                                 print("Kill, Death, dan Assist harus berupa angka!")
-                        # 8. Update perubahan RR
-                        if hasilBaru != match[4]:
-                            print(f"\nHasil berubah dari {match[4]} menjadi {hasilBaru}, RR wajib diisi ulang.")
+
+                        if hasilBaru != match["hasil"]:
+                            print(f"\nHasil berubah dari {match['hasil']} menjadi {hasilBaru}, RR wajib diisi ulang.")
                             ganti_rr = True
                         else:
                             while True:
-                                jawab = input(f"\nGanti RR Yang Didapat? (sekarang: {match[8]:+}) (y/t): ").strip().lower()
+                                jawab = input(f"\nGanti RR Yang Didapat? (sekarang: {match['rr']:+}) (y/t): ").strip().lower()
                                 if jawab in ("y", "ya", "t", "tidak"):
                                     break
                                 print("Jawab dengan y/ya atau t/tidak!")
@@ -788,25 +792,22 @@ while True:
                                 break
                             print("Jawab dengan y/ya atau t/tidak!")
                         if simpan == "y" or simpan == "ya":
-                            # nama map[0], nama agen[1], round w[2], round l[3], hasil[4], kill[5], death[6], asist[7], rr[8]
-                            user_matches[idx_game_update][0] = map_baru
-                            user_matches[idx_game_update][1] = baru_agent
-                            user_matches[idx_game_update][2] = round_w_baru
-                            user_matches[idx_game_update][3] = round_l_baru
-                            user_matches[idx_game_update][4] = hasilBaru
-                            user_matches[idx_game_update][5] = kill_baru
-                            user_matches[idx_game_update][6] = death_baru
-                            user_matches[idx_game_update][7] = assist_baru
-                            user_matches[idx_game_update][8] = rr_baru
+                            user_matches[nomor_game]["map"] = map_baru
+                            user_matches[nomor_game]["agent"] = baru_agent
+                            user_matches[nomor_game]["round_w"] = round_w_baru
+                            user_matches[nomor_game]["round_l"] = round_l_baru
+                            user_matches[nomor_game]["hasil"] = hasilBaru
+                            user_matches[nomor_game]["kill"] = kill_baru
+                            user_matches[nomor_game]["death"] = death_baru
+                            user_matches[nomor_game]["assist"] = assist_baru
+                            user_matches[nomor_game]["rr"] = rr_baru
                             print("\n\033[92mData game berhasil diperbarui!\033[0m")
                         else:
                             print("\nPerubahan dibatalkan, data tidak diubah.")
                         input("\nTekan ENTER untuk kembali...")
                         
-                        
                     elif pilih_crud == "4":
-                        os.system("cls" if os.name == "nt" else "clear")
-                        
+                        os.system("cls" if os.name == "nt" else "clear")        
                         print("=== HAPUS DATA Game ===\n")
                         if len(user_matches) == 0:
                             print("Belum ada data untuk dihapus.")
@@ -833,7 +834,6 @@ while True:
                                     break
                                 else:
                                     print("Data game ga ada")
-
                             else:
                                 print("Masukkan nomor data game yang valid atau ketik 'kembali'!")
                         
