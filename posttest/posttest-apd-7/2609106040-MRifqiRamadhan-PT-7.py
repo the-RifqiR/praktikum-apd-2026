@@ -67,3 +67,105 @@ def tampil_menu_crud():
     print("4. Delete (Hapus) Data Game")
     print("5. Lihat Statistik & Rekap Lengkap")
     print("6. Kembali ke Dashboard")
+    
+def input_angka(pesan, minimum=0, maksimum=None):
+    while True:
+        try:
+            angka = int(input(pesan).strip())
+            if angka < minimum:
+                raise ValueError(f"Angka minimal {minimum}.")
+            if maksimum is not None and angka > maksimum:
+                raise ValueError(f"Angka maksimal {maksimum}.")
+        except ValueError as error:
+            print(f"Input tidak valid: {error}")
+        else:
+            return angka    
+
+def input_teks(pesan):
+    while True:
+        try:
+            teks = input(pesan).strip()
+            if teks == "":
+                raise ValueError("Input tidak boleh kosong!")
+        except ValueError as error:
+            print(error)
+        else:
+            return teks
+
+def cek_login(username, password, role):
+    akun = accounts.get(username)
+    return akun is not None and akun["password"] == password and akun["role"] == role
+
+def register():
+    clear()
+    judul(" REGISTER AKUN BARU ")
+    while True:
+        username = input_teks("Masukkan username baru: ")
+        sudah_ada = False
+        for nama_akun in accounts:
+            if nama_akun.lower() == username.lower():
+                sudah_ada = True
+        if sudah_ada:
+            print("Username sudah terdaftar!")
+        else:
+            break
+    password = input_teks("Masukkan password baru: ")
+    accounts[username] = {"password": password, "role": "user"}
+    print("Registrasi berhasil, silakan login.")
+    jeda()
+    
+def login(role):
+    clear()
+    judul(f" LOGIN {role.upper()} ")
+    username = input_teks("Username: ")
+    password = input_teks("Password: ")
+    if cek_login(username, password, role):
+        print("Selamat login berhasil")
+        jeda()
+        return username
+    else:
+        print("Login gagal, mungkin ada yang salah 🤔")
+        jeda()
+        return None
+
+def main():
+    clear()
+    print("Selamat datang di VlaoTracker!")
+    print('''Halo, halo, Selamat Pagi, Hidup Mahasiswa, Hidup Rakyat Indonesia, Hidup Perempuan Yang Melawan, Hidup Teknik! Selamat datang di program paling epik abad ini: VLAOTRACKER 
+
+Dibuat sebelum menuju TA huhuhuhu, secangkir esteh yang membuat semangat sebentar, dan dipersembahkan untuk aslab:
+-> NLG'25 (068) (Ketua)
+-> R'25   (106)
+-> SNA'25 (016)
+-> YPA'25 (049)
+Well... Well... Well. B1 misi cobain semua Aslab :D 
+
+Program ini didedikasikan buat nilai 100 dan menambah pengetahuan.
+
+Intinya: Catat performa, tampilin stat. 
+semoga lulus posttest, dan jangan lupa senyum ya Aslab Aslab Aslab Aslab sibuk banget kaya \033[9mpenjabat\033[0m guah (ermmm ini dari stiker btw bukan saya yang ngomong :D) Yey! 🎉
+time to lock in''')
+    jeda()
+    while True:
+        clear()
+        tampil_menu_awal()
+        pilihan = input_angka("Pilih menu (1-4): ", 1, 4)
+        if pilihan == 1:
+            username = login("admin")
+            if username is not None:
+                print("hello")
+                break
+        elif pilihan == 2:
+            username = login("user")
+            if username is not None:
+                print("hello")
+                break
+        elif pilihan == 3:
+            register()
+        else:
+            print("Terima kasih sudah menggunakan VlaoTracker!")
+            break
+
+
+if __name__ == "__main__":
+    main()
