@@ -128,6 +128,49 @@ def login(role):
         jeda()
         return None
 
+# Admin
+        
+def tambah_map():
+    clear()
+    judul(" TAMBAH MAP ")
+    nama_data_baru_sementara = input_teks("Masukkan nama map data_baru_sementara: ")
+    for nama_map in daftar_map:
+        if nama_map.lower() == nama_data_baru_sementara.lower():
+            print("Map sudah terdaftar!")
+            jeda()
+            return
+    daftar_map[nama_data_baru_sementara] = True
+    print(f"Map '{nama_data_baru_sementara}' berhasil ditambahkan.")
+    jeda()
+    
+def tambah_agent():
+    clear()
+    judul(" TAMBAH AGENT ")
+    role = pilih_dari_dictionary(agents, "Pilih nomor role: ")
+    nama_data_baru_sementara = input_teks("Masukkan nama agent data_baru_sementara: ")
+    for nama_role, daftar_agent in agents.items():
+        for nama_agent in daftar_agent:
+            if nama_agent.lower() == nama_data_baru_sementara.lower():
+                print(f"Agent sudah terdaftar pada role {nama_role}!")
+                jeda()
+                return
+    agents[role][nama_data_baru_sementara] = True
+    print(f"Agent '{nama_data_baru_sementara}' berhasil ditambahkan ke {role}.")
+    jeda()
+    
+def menu_admin(username):
+    while True:
+        clear()
+        tampil_menu_admin(username)
+        pilihan = input_angka("Pilih menu (1-4): ", 1, 4)
+        if pilihan == 1:
+            tambah_map()
+        elif pilihan == 2:
+            tambah_agent()
+        else:
+            break
+
+
 def main():
     clear()
     print("Selamat datang di VlaoTracker!")
@@ -153,8 +196,7 @@ time to lock in''')
         if pilihan == 1:
             username = login("admin")
             if username is not None:
-                print("hello")
-                break
+                menu_admin(username)
         elif pilihan == 2:
             username = login("user")
             if username is not None:
