@@ -158,6 +158,16 @@ def tambah_agent():
     print(f"Agent '{nama_data_baru_sementara}' berhasil ditambahkan ke {role}.")
     jeda()
     
+def rekap_pengguna():
+    clear()
+    judul(" REKAP SEMUA PENGGUNA ")
+    if len(data_performa) == 0:
+        print("Belum ada data performa pengguna.")
+    else:
+        for username, data in data_performa.items():
+            print(f"Username: {username} | Total Game: {hitung_total_game(list(data['history_catat'].keys()))}")
+    jeda()
+    
 def menu_admin(username):
     while True:
         clear()
