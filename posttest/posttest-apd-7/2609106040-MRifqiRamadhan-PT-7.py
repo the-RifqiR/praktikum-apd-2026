@@ -157,7 +157,16 @@ def tambah_agent():
     agents[role][nama_data_baru_sementara] = True
     print(f"Agent '{nama_data_baru_sementara}' berhasil ditambahkan ke {role}.")
     jeda()
-    
+ 
+# INI rekursinya: menghitung jumlah game dari daftar nomor game.
+# Base case: indeks mencapai panjang daftar, hasilnya 0.
+# Recursive case: hitung 1 game lalu lanjutkan ke indeks berikutnya.
+def hitung_total_game(daftar_nomor, indeks=0):
+    if indeks >= len(daftar_nomor):
+        return 0
+    else:
+        return 1 + hitung_total_game(daftar_nomor, indeks + 1)
+       
 def rekap_pengguna():
     clear()
     judul(" REKAP SEMUA PENGGUNA ")
@@ -177,8 +186,32 @@ def menu_admin(username):
             tambah_map()
         elif pilihan == 2:
             tambah_agent()
+        elif pilihan == 3:
+            rekap_pengguna()
         else:
             break
+
+# User
+def pilih_dari_dictionary(data, pesan):
+    pilihan = {}
+    nomor = 1
+    for nama in data:
+        pilihan[nomor] = nama
+        print(f"{nomor}. {nama}")
+        nomor += 1
+    nomor_pilih = input_angka(pesan, 1, len(pilihan))
+    return pilihan[nomor_pilih]
+
+def input_map():
+    print("\nDaftar Map:")
+    return pilih_dari_dictionary(daftar_map, "Pilih nomor map: ")
+
+
+def input_agent():
+    print("\nPilih Role Agent:")
+    role = pilih_dari_dictionary(agents, "Pilih nomor role: ")
+    print(f"\nDaftar Agent {role}:")
+    return pilih_dari_dictionary(agents[role], "Pilih nomor agent: ")
 
 
 def main():
