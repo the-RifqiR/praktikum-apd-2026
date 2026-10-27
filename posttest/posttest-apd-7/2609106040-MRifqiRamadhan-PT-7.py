@@ -216,6 +216,17 @@ def atur_rank_awal(user_data):
     user_data["rank"] = rank
     user_data["rr_awal"] = rr
     user_data["rank_sudah_diisi"] = True
+    
+# Read
+def tampil_daftar_game(history):
+    if len(history) == 0:
+        print("Belum ada data game yang dimasukkan.")
+    else:
+        for nomor, match in history.items():
+            print(f"Game #{nomor} | Map: {match['map']} | Agent: {match['agent']}")
+            print(f"  Hasil: {match['hasil']} ({match['round_w']}-{match['round_l']}) "
+                  f"| KDA: {match['kill']}/{match['death']}/{match['assist']} "
+                  f"| RR: {match['rr']:+}")
 
 def input_map():
     print("\nDaftar Map:")
@@ -299,7 +310,10 @@ def menu_crud(user_data):
         tampil_menu_crud()
         pilihan = input_angka("Pilih menu (1-6): ", 1, 6)
         if pilihan == 1:
-            break
+            clear()
+            judul(" DAFTAR GAME TERCATAT ")
+            tampil_daftar_game(user_data["history_catat"])
+            jeda()
         elif pilihan == 2:
             catat_game(user_data)
         elif pilihan == 3:
