@@ -202,6 +202,21 @@ def pilih_dari_dictionary(data, pesan):
     nomor_pilih = input_angka(pesan, 1, len(pilihan))
     return pilihan[nomor_pilih]
 
+def atur_rank_awal(user_data):
+    if user_data["rank_sudah_diisi"]:
+        return
+    print("\nPilih Rank Saat Ini:")
+    for nomor, nama_rank in daftar_rank.items():
+        print(f"{nomor}. {nama_rank}")
+    rank = input_angka("Pilih nomor rank (1-9): ", 1, len(daftar_rank))
+    if rank == len(daftar_rank):
+        rr = input_angka("RR Radiant saat ini (minimal 0): ", 0)
+    else:
+        rr = input_angka("RR saat ini (0-99): ", 0, 99)
+    user_data["rank"] = rank
+    user_data["rr_awal"] = rr
+    user_data["rank_sudah_diisi"] = True
+
 def input_map():
     print("\nDaftar Map:")
     return pilih_dari_dictionary(daftar_map, "Pilih nomor map: ")
@@ -213,7 +228,105 @@ def input_agent():
     print(f"\nDaftar Agent {role}:")
     return pilih_dari_dictionary(agents[role], "Pilih nomor agent: ")
 
+def input_score():
+    round_w = input_angka("Jumlah Round Menang: ", 0)
+    round_l = input_angka("Jumlah Round Kalah: ", 0)
+    return round_w, round_l
 
+
+def input_kda():
+    k = input_angka("Total Kill: ", 0)
+    d = input_angka("Total Death: ", 0)
+    a = input_angka("Total Assist: ", 0)
+    return k, d, a
+
+def tentukan_hasil(round_w, round_l):
+    if round_w > round_l:
+        return "W"
+    elif round_w < round_l:
+        return "L"
+    return "T"
+
+
+def input_rr(hasil):
+    while True:
+        try:
+            if hasil == "W":
+                input_rr = int(input("RR Yang Didapat: ").strip())
+                if input_rr <= 0:
+                    raise ValueError("Minimal dapat 1 RR lah.")
+                return input_rr
+            elif hasil == "L":
+                input_rr = int(input("RR Yang Didapat: ").strip())
+                if input_rr <= 0:
+                    raise ValueError("Minimal dapat 1 RR lah.")
+                return -input_rr
+            else:
+                return int(input("RR seri (boleh negatif, positif, atau 0): ").strip())
+        except ValueError as error:
+            print(f"RR tidak valid: {error}")
+
+def input_data_game():
+    nama_map = input_map()
+    nama_agent = input_agent()
+    round_w, round_l = input_score()
+    hasil = tentukan_hasil(round_w, round_l)
+    print(f"Hasil game: {hasil}")
+    k, d, a = input_kda()
+    rr = input_rr(hasil)
+    return {"map": nama_map, "agent": nama_agent, "round_w": round_w, "round_l": round_l, "hasil": hasil, "kill": k, "death": d, "assist": a, "rr": rr}
+
+def catat_game(user_data):
+    clear()
+    judul(" CATAT PERFORMA GAME ")
+    jumlah = input_angka("Jumlah game yang ingin dicatat: ", 1)
+    atur_rank_awal(user_data)
+    history = user_data["history_catat"]
+    for gim in range(jumlah):
+        print(f"\n--- GAME KE-{gim + 1} DARI {jumlah} ---")
+        data = input_data_game()
+        # Cari nomor kda_terbesar agar nomor game tidak menimpa data data_lama_sementara.
+        nomor_data_baru_sementara = 1
+        if len(history) > 0:
+            nomor_data_baru_sementara = max(history.keys()) + 1
+        history[nomor_data_baru_sementara] = data
+    print("\nSemua data game berhasil dicatat!")
+    jeda()
+
+def menu_crud(user_data):
+    while True:
+        clear()
+        tampil_menu_crud()
+        pilihan = input_angka("Pilih menu (1-6): ", 1, 6)
+        if pilihan == 1:
+            break
+        elif pilihan == 2:
+            catat_game(user_data)
+        elif pilihan == 3:
+            break
+        elif pilihan == 4:
+            break
+        elif pilihan == 5:
+            break
+        else:
+            break 
+        
+def menu_user(username):
+    if username not in data_performa:
+        data_performa[username] = {"rank": 1, "rr_awal": 0, "rank_sudah_diisi": False, "history_catat": {}}
+        
+    user_data = data_performa[username]
+    while True:
+        clear()
+        tampil_menu_user(username)
+        pilihan = input_angka("Pilih menu (1-3): ", 1, 3)
+        if pilihan == 1:
+            catat_game(user_data)
+            menu_crud(user_data)
+        elif pilihan == 2:
+            menu_crud(user_data)
+        else:
+            break
 def main():
     clear()
     print("Selamat datang di VlaoTracker!")
@@ -243,8 +356,7 @@ time to lock in''')
         elif pilihan == 2:
             username = login("user")
             if username is not None:
-                print("hello")
-                break
+                menu_user(username)
         elif pilihan == 3:
             register()
         else:
