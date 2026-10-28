@@ -1,8 +1,9 @@
 import os
 
+# atart global variabel
 accounts = {
     "adminvlao": {"password": "admin123", "role": "admin"},
-    "bangyoga": {"password": "049", "role": "admin"},
+    "bangyoga": {"password": "017", "role": "admin"},
     "mbafina": {"password": "016", "role": "admin"},
     "aja": {"password": "041", "role": "user"},
 }
@@ -19,12 +20,15 @@ agents = {
 }
 
 data_performa = {}
+# end global variabel
+
 bintang = "=" * 45
 
+# prosedur
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
 
-
+# prosedur
 def jeda():
     input("\nTekan ENTER untuk kembali...")
 
@@ -68,6 +72,7 @@ def tampil_menu_crud():
     print("5. Lihat Statistik & Rekap Lengkap")
     print("6. Kembali ke Dashboard")
     
+# fungsi pake paramater
 def input_angka(pesan, minimum=0, maksimum=None):
     while True:
         try:
@@ -81,6 +86,7 @@ def input_angka(pesan, minimum=0, maksimum=None):
         else:
             return angka    
 
+# fungsi pake paramater
 def input_teks(pesan):
     while True:
         try:
@@ -100,7 +106,9 @@ def register():
     clear()
     judul(" REGISTER AKUN BARU ")
     while True:
+        # lokal variabel 1
         username = input_teks("Masukkan username baru: ")
+        # lokal variabel 2
         sudah_ada = False
         for nama_akun in accounts:
             if nama_akun.lower() == username.lower():
@@ -117,7 +125,9 @@ def register():
 def login(role):
     clear()
     judul(f" LOGIN {role.upper()} ")
+    # lokal variabel 3
     username = input_teks("Username: ")
+    # lokal variabel 4 
     password = input_teks("Password: ")
     if cek_login(username, password, role):
         print("Selamat login berhasil")
@@ -133,6 +143,7 @@ def login(role):
 def tambah_map():
     clear()
     judul(" TAMBAH MAP ")
+    # lokal variabel 5
     nama_data_baru_sementara = input_teks("Masukkan nama map data_baru_sementara: ")
     for nama_map in daftar_map:
         if nama_map.lower() == nama_data_baru_sementara.lower():
@@ -192,8 +203,11 @@ def menu_admin(username):
             break
 
 # User
+# fungsi dengan parameter
 def pilih_dari_dictionary(data, pesan):
+    # lokal variabel
     pilihan = {}
+    # lokal variabel
     nomor = 1
     for nama in data:
         pilihan[nomor] = nama
@@ -228,23 +242,25 @@ def tampil_daftar_game(history):
                   f"| KDA: {match['kill']}/{match['death']}/{match['assist']} "
                   f"| RR: {match['rr']:+}")
 
+# fungsi tanpa parameter
 def input_map():
     print("\nDaftar Map:")
     return pilih_dari_dictionary(daftar_map, "Pilih nomor map: ")
 
-
+# fungsi tanpa parameter
 def input_agent():
     print("\nPilih Role Agent:")
     role = pilih_dari_dictionary(agents, "Pilih nomor role: ")
     print(f"\nDaftar Agent {role}:")
     return pilih_dari_dictionary(agents[role], "Pilih nomor agent: ")
 
+# fungsi tanpa parameter
 def input_score():
     round_w = input_angka("Jumlah Round Menang: ", 0)
     round_l = input_angka("Jumlah Round Kalah: ", 0)
     return round_w, round_l
 
-
+# fungsi tanpa parameter
 def input_kda():
     k = input_angka("Total Kill: ", 0)
     d = input_angka("Total Death: ", 0)
@@ -277,10 +293,15 @@ def input_rr(hasil):
         except ValueError as error:
             print(f"RR tidak valid: {error}")
 
+# fungsi tanpa parameter
 def input_data_game():
+    # lokal variabel
     nama_map = input_map()
+    # lokal variabel
     nama_agent = input_agent()
+    # lokal variabel
     round_w, round_l = input_score()
+    # lokal variabel
     hasil = tentukan_hasil(round_w, round_l)
     print(f"Hasil game: {hasil}")
     k, d, a = input_kda()
@@ -293,16 +314,225 @@ def catat_game(user_data):
     jumlah = input_angka("Jumlah game yang ingin dicatat: ", 1)
     atur_rank_awal(user_data)
     history = user_data["history_catat"]
+    
     for gim in range(jumlah):
         print(f"\n--- GAME KE-{gim + 1} DARI {jumlah} ---")
         data = input_data_game()
-        # Cari nomor kda_terbesar agar nomor game tidak menimpa data data_lama_sementara.
         nomor_data_baru_sementara = 1
+        
         if len(history) > 0:
             nomor_data_baru_sementara = max(history.keys()) + 1
         history[nomor_data_baru_sementara] = data
     print("\nSemua data game berhasil dicatat!")
     jeda()
+    
+# fungsi pake parameter
+def pilih_nomor_game(history, aksi):
+    while True:
+        teks = input(f"\nNomor game untuk {aksi} (atau 'kembali'): ").strip().lower()
+        
+        if teks == "kembali":
+            return None
+        try:
+            nomor = int(teks)
+            if nomor not in history:
+                raise KeyError(f"Game #{nomor} tidak ditemukan!")
+        except ValueError:
+            print("ValueError: masukkan nomor berupa angka atau 'kembali'.")
+        except KeyError as error:
+            print(f"KeyError: {error}")
+        else:
+            return nomor
+
+def konfirmasi(pesan):
+    while True:
+        try:
+            jawaban = input(pesan).strip().lower()
+            if jawaban not in ("y", "ya", "t", "tidak"):
+                raise ValueError("Jawab y/ya atau t/tidak!")
+        except ValueError as error:
+            print(error)
+        else:
+            return jawaban == "y" or jawaban == "ya"
+        
+
+
+def update_game(user_data):
+    clear()
+    judul(" UPDATE DATA GAME ")
+    history = user_data["history_catat"]
+    
+    if len(history) == 0:
+        print("Belum ada data untuk diubah.")
+        jeda()
+        return
+    
+    tampil_daftar_game(history)
+    nomor = pilih_nomor_game(history, "diubah")
+    
+    if nomor is None:
+        return
+
+    data_lama_sementara = history[nomor]
+
+    data_baru_sementara = data_lama_sementara.copy()
+    
+    print(f"\nMengubah Game #{nomor}")
+    if konfirmasi(f"Ganti Map ({data_lama_sementara['map']})? (y/t): "):
+        data_baru_sementara["map"] = input_map()
+        
+    if konfirmasi(f"Ganti Agent ({data_lama_sementara['agent']})? (y/t): "):
+        data_baru_sementara["agent"] = input_agent()
+    
+    if konfirmasi(f"Ganti Score ({data_lama_sementara['round_w']}-{data_lama_sementara['round_l']})? (y/t): "):
+        data_baru_sementara["round_w"], data_baru_sementara["round_l"] = input_score()
+        data_baru_sementara["hasil"] = tentukan_hasil(data_baru_sementara["round_w"], data_baru_sementara["round_l"])
+    
+    if konfirmasi(f"Ganti KDA ({data_lama_sementara['kill']}/{data_lama_sementara['death']}/{data_lama_sementara['assist']})? (y/t): "):
+        data_baru_sementara["kill"], data_baru_sementara["death"], data_baru_sementara["assist"] = input_kda()
+    
+    if data_baru_sementara["hasil"] != data_lama_sementara["hasil"]:
+        print(f"Hasil berubah {data_lama_sementara['hasil']} menjadi {data_baru_sementara['hasil']}; RR wajib diisi ulang.")
+        data_baru_sementara["rr"] = input_rr(data_baru_sementara["hasil"])
+    
+    elif konfirmasi(f"Ganti RR ({data_lama_sementara['rr']:+})? (y/t): "):
+        data_baru_sementara["rr"] = input_rr(data_baru_sementara["hasil"])
+
+    print("\n--- RINGKASAN DATA YANG DIPERBARUI ---")
+    print(f"Map: {data_baru_sementara['map']} | Agent: {data_baru_sementara['agent']}")
+    print(f"Score: {data_baru_sementara['round_w']}-{data_baru_sementara['round_l']} ({data_baru_sementara['hasil']})")
+    print(f"KDA: {data_baru_sementara['kill']}/{data_baru_sementara['death']}/{data_baru_sementara['assist']} | RR: {data_baru_sementara['rr']:+}")
+    
+    if konfirmasi("Simpan perubahan? (y/t): "):
+        history[nomor] = data_baru_sementara
+        print("Data game berhasil diupdate")
+    else:
+        print("Perubahan dibatalkan.")
+    jeda()
+
+
+def hapus_game(user_data):
+    clear()
+    judul(" HAPUS DATA GAME ")
+    history = user_data["history_catat"]
+    if len(history) == 0:
+        print("Belum ada data untuk dihapus.")
+        jeda()
+        return
+    
+    tampil_daftar_game(history)
+    nomor = pilih_nomor_game(history, "dihapus")
+    
+    if nomor is None:
+        return
+    if konfirmasi(f"Yakin hapus Game #{nomor}? (y/t): "):
+        del history[nomor]
+        history_data_baru_sementara = {}
+        nomor_data_baru_sementara = 1
+        
+        for data in history.values():
+            history_data_baru_sementara[nomor_data_baru_sementara] = data
+            nomor_data_baru_sementara += 1
+        user_data["history_catat"] = history_data_baru_sementara
+        print("Data game berhasil dihapus!")
+    else:
+        print("Hapus data dibatalkan.")
+    jeda()
+
+def hitung_rank_rr(user_data):
+    rank = user_data["rank"]
+    rr = user_data["rr_awal"]
+    for match in user_data["history_catat"].values():
+        rr += match["rr"]
+        while rr >= 100 and rank < len(daftar_rank):
+            rr -= 100
+            rank += 1
+        while rr < 0 and rank > 1:
+            rr += 100
+            rank -= 1
+        if rank == 1 and rr < 0:
+            rr = 0
+    return rank, rr
+
+
+def statistik(user_data):
+    clear()
+    judul(" REKAPITULASI STATISTIK PERFORMA ")
+    history = user_data["history_catat"]
+    if len(history) == 0:
+        print("Belum ada data rekap untuk dihitung.")
+        jeda()
+        return
+
+    total_game = hitung_total_game(list(history.keys()))
+    menang = kalah = seri = 0
+    sum_k = sum_d = sum_a = 0
+    map_hitung = {}
+    agent_hitung = {}
+    pertama = True
+    kda_terbesar = {}
+    kda_terendah = {}
+    map_kda_tertinggi = {}
+    map_kda_terdikit = {}
+
+    for match in history.values():
+        if match["hasil"] == "W":
+            menang += 1
+        elif match["hasil"] == "L":
+            kalah += 1
+        else:
+            seri += 1
+            
+        sum_k += match["kill"]
+        sum_d += match["death"]
+        sum_a += match["assist"]
+        teks_map = f"Map {match['map']} (Agent {match['agent']})"
+        
+        for key_kda in ("kill", "death", "assist"):
+            if pertama or match[key_kda] > kda_terbesar[key_kda]:
+                kda_terbesar[key_kda] = match[key_kda]
+                map_kda_tertinggi[key_kda] = teks_map
+            if pertama or match[key_kda] < kda_terendah[key_kda]:
+                kda_terendah[key_kda] = match[key_kda]
+                map_kda_terdikit[key_kda] = teks_map
+        pertama = False
+        map_hitung[match["map"]] = map_hitung.get(match["map"], 0) + 1
+        agent_hitung[match["agent"]] = agent_hitung.get(match["agent"], 0) + 1
+
+
+    map_tersering = ""
+    max_map = 0
+    for nama, jumlah in map_hitung.items():
+        if jumlah > max_map:
+            max_map = jumlah
+            map_tersering = nama
+            
+    agent_tersering = ""
+    max_agent = 0
+    for nama, jumlah in agent_hitung.items():
+        if jumlah > max_agent:
+            max_agent = jumlah
+            agent_tersering = nama
+
+    rank, rr = hitung_rank_rr(user_data)
+    if rank == len(daftar_rank):
+        rr_butuh = "Sudah rank tertinggi (Radiant)"
+    else:
+        rr_butuh = f"{100 - rr} RR lagi menuju {daftar_rank[rank + 1]}"
+
+    print(f"Total Game Dimainkan    : {total_game}")
+    print(f"Menang / Kalah / Seri   : {menang} / {kalah} / {seri}")
+    print(f"Total KDA               : {sum_k} / {sum_d} / {sum_a}")
+    print(f"Rata-rata KDA per Game  : {sum_k/total_game:.1f} / {sum_d/total_game:.1f} / {sum_a/total_game:.1f}")
+    for key_kda, label in (("kill", "Kill"), ("death", "Death"), ("assist", "Assist")):
+        print(f"{label} Terbanyak          : {kda_terbesar[key_kda]} ({map_kda_tertinggi[key_kda]})")
+        print(f"{label} Terdikit           : {kda_terendah[key_kda]} ({map_kda_terdikit[key_kda]})")
+    print(f"Map Paling Sering Main  : {map_tersering} ({max_map}x)")
+    print(f"Agent Paling Sering     : {agent_tersering} ({max_agent}x)")
+    print(f"Rank Saat Ini           : {daftar_rank[rank]} (RR: {rr})")
+    print(f"Sisa RR Menuju Rank Naik: {rr_butuh}")
+    jeda()
+
 
 def menu_crud(user_data):
     while True:
@@ -317,11 +547,11 @@ def menu_crud(user_data):
         elif pilihan == 2:
             catat_game(user_data)
         elif pilihan == 3:
-            break
+            update_game(user_data)
         elif pilihan == 4:
-            break
+            hapus_game(user_data)
         elif pilihan == 5:
-            break
+            statistik(user_data)
         else:
             break 
         
@@ -341,6 +571,9 @@ def menu_user(username):
             menu_crud(user_data)
         else:
             break
+        
+        
+
 def main():
     clear()
     print("Selamat datang di VlaoTracker!")
@@ -350,7 +583,7 @@ Dibuat sebelum menuju TA huhuhuhu, secangkir esteh yang membuat semangat sebenta
 -> NLG'25 (068) (Ketua)
 -> R'25   (106)
 -> SNA'25 (016)
--> YPA'25 (049)
+-> YAP'25 (017)
 Well... Well... Well. B1 misi cobain semua Aslab :D 
 
 Program ini didedikasikan buat nilai 100 dan menambah pengetahuan.
