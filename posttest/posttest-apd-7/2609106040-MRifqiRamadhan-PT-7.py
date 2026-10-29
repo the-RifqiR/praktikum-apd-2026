@@ -144,29 +144,29 @@ def tambah_map():
     clear()
     judul(" TAMBAH MAP ")
     # lokal variabel 5
-    nama_data_baru_sementara = input_teks("Masukkan nama map data_baru_sementara: ")
+    nama_baru = input_teks("Masukkan nama map: ")
     for nama_map in daftar_map:
-        if nama_map.lower() == nama_data_baru_sementara.lower():
+        if nama_map.lower() == nama_baru.lower():
             print("Map sudah terdaftar!")
             jeda()
             return
-    daftar_map[nama_data_baru_sementara] = True
-    print(f"Map '{nama_data_baru_sementara}' berhasil ditambahkan.")
+    daftar_map[nama_baru] = True
+    print(f"Map '{nama_baru}' berhasil ditambahkan.")
     jeda()
     
 def tambah_agent():
     clear()
     judul(" TAMBAH AGENT ")
     role = pilih_dari_dictionary(agents, "Pilih nomor role: ")
-    nama_data_baru_sementara = input_teks("Masukkan nama agent data_baru_sementara: ")
+    nama_baru = input_teks("Masukkan nama agent: ")
     for nama_role, daftar_agent in agents.items():
         for nama_agent in daftar_agent:
-            if nama_agent.lower() == nama_data_baru_sementara.lower():
+            if nama_agent.lower() == nama_baru.lower():
                 print(f"Agent sudah terdaftar pada role {nama_role}!")
                 jeda()
                 return
-    agents[role][nama_data_baru_sementara] = True
-    print(f"Agent '{nama_data_baru_sementara}' berhasil ditambahkan ke {role}.")
+    agents[role][nama_baru] = True
+    print(f"Agent '{nama_baru}' berhasil ditambahkan ke {role}.")
     jeda()
  
 # INI rekursinya: menghitung jumlah game dari daftar nomor game.
