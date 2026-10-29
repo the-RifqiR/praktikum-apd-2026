@@ -318,11 +318,11 @@ def catat_game(user_data):
     for gim in range(jumlah):
         print(f"\n--- GAME KE-{gim + 1} DARI {jumlah} ---")
         data = input_data_game()
-        nomor_data_baru_sementara = 1
+        nomor_baru = 1
         
         if len(history) > 0:
-            nomor_data_baru_sementara = max(history.keys()) + 1
-        history[nomor_data_baru_sementara] = data
+            nomor_baru = max(history.keys()) + 1
+        history[nomor_baru] = data
     print("\nSemua data game berhasil dicatat!")
     jeda()
     
@@ -428,11 +428,11 @@ def hapus_game(user_data):
     if konfirmasi(f"Yakin hapus Game #{nomor}? (y/t): "):
         del history[nomor]
         history_data_baru_sementara = {}
-        nomor_data_baru_sementara = 1
+        nomor_baru = 1
         
         for data in history.values():
-            history_data_baru_sementara[nomor_data_baru_sementara] = data
-            nomor_data_baru_sementara += 1
+            history_data_baru_sementara[nomor_baru] = data
+            nomor_baru += 1
         user_data["history_catat"] = history_data_baru_sementara
         print("Data game berhasil dihapus!")
     else:
