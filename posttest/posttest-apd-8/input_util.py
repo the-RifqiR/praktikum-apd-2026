@@ -6,9 +6,9 @@ def input_angka(pesan, minimum=0, maksimum=None):
         try:
             angka = int(input(pesan).strip())
             if angka < minimum:
-                raise ValueError(f"Angka minimal {minimum}.")
+                raise ValueError(f"minimal {minimum}.")
             if maksimum is not None and angka > maksimum:
-                raise ValueError(f"Angka maksimal {maksimum}.")
+                raise ValueError(f"maksimal {maksimum}.")
         except ValueError as e:
             error(f"Input tidak valid: {e}")
         else:

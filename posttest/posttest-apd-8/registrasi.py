@@ -1,4 +1,4 @@
-from pwinput import pwinput # Agar password tidak terlihat di terminal
+from pwinput import pwinput
 from data import accounts
 from tampilan import clear, judul, jeda, sukses, error
 from input_util import input_teks

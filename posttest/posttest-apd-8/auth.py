@@ -10,12 +10,12 @@ def cek_login(username, password, role):
 def login(role):
     clear()
     judul(f" LOGIN {role.upper()} ")
-    username = input_teks("Username: ")
-    password = pwinput("Password: ").strip()
-    if cek_login(username, password, role):
+    inputUsername = input_teks("Username: ")
+    inputPassword = pwinput("Password: ").strip()
+    if cek_login(inputUsername, inputPassword, role):
         sukses("\nSelamat login berhasil")
         jeda()
-        return username
+        return inputUsername
     error("\nLogin gagal, mungkin ada yang salah 🤔")
     jeda()
     return None
