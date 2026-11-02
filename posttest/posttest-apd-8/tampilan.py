@@ -40,9 +40,14 @@ def cetak_tabel(headers, rows, rata="c", lebar_maks=None):
 
 def pilih_menu(judul_teks, opsi):
     judul(judul_teks)
-    return inquirer.select(
+
+    pilihan = inquirer.select(
         message="Pilih menu:",
-        choices=opsi,
+        choices=list(opsi.values()),
         pointer="➡️ ",
         qmark=""
     ).execute()
+
+    for angka, teks in opsi.items():
+        if teks == pilihan:
+            return angka
