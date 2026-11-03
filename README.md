@@ -208,4 +208,4 @@
 <p>-</p>
 <p>-</p>
 
-<p>Kalau yang akt 26 liat ini terus ketemu cave ngomong ini dong kalau mau "Hi PPLG"</p>
+<p>Kalau yang akt 26 liat ini terus ketemu guah ngomong ini dong kalau mau "Hi PPLG"</p>
